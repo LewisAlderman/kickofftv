@@ -24,7 +24,7 @@ function Homepage(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex flex-col min-h-screen bg-gray-50">
+      <div className="flex flex-col min-h-screen ios-safari-full-height bg-blueGray-50">
         <Navigation/>
 
         <Main>

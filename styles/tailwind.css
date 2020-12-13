@@ -6,4 +6,10 @@
 	.blend-mode-darken {
 		mix-blend-mode: darken;
 	}
+
+	.ios-safari-full-height {
+		@supports (-webkit-touch-callout: none) {
+			min-height: -webkit-fill-available; 
+		}
+	}
 }

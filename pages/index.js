@@ -1,32 +1,39 @@
 import Head from 'next/head'
 import Cors from 'cors'
 import { URL, transformBody } from '@data/index';
-import Button from '@components/Button';
+import Navigation from '@components/Navigation';
+import Footer from '@components/Footer';
+import Main from '@components/Main';
+import Matches from '@components/Matches';
 
-function Home(props) {    
+// @TODO nav component
+// @TODO footer component
+
+/**
+ * @param {Object} props 
+ * @param {import('@data/index').Match[]} props.data 
+ */
+
+function Homepage(props) {    
+  console.log(props)
+  
   return (
-    <div>
+    <>
       <Head>
-        <title>Create Next App</title>
+        <title>WhensTheMatch</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="px-12 py-12 text-sm font-extrabold text-red-800 uppercase bg-red-100">
-        Page Header
-      </h1>
+      <div className="flex flex-col min-h-screen bg-gray-50">
+        <Navigation/>
 
-      <Button>Press me</Button>
-
-      <main>
-        {props.data ? (
-          <pre>
-          {JSON.stringify(props.data, null, 2)}
-          </pre>
-        ) : (
-          <h1>???</h1>
-        ) }
-      </main>
-    </div>
+        <Main>
+          <Matches items={props?.data}/>
+        </Main>
+        
+        <Footer/>
+      </div>
+    </>
   )
 }
 
@@ -43,4 +50,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default Home;
+export default Homepage;

@@ -27,6 +27,7 @@
     "tailwindcss": "^2.0.2"
   },
   "devDependencies": {
-    "@types/isomorphic-fetch": "^0.0.35"
+    "@types/isomorphic-fetch": "^0.0.35",
+    "tailwindcss-debug-screens": "^2.0.0"
   }
 }

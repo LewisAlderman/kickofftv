@@ -34,11 +34,13 @@ function Homepage(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex flex-col min-h-screen ios-safari-full-height bg-blueGray-50">
+      <div className="flex flex-col min-h-screen ios-safari-full-height bg-blueGray-50 debug-screens">
         <Navigation/>
 
         <Main>
-          <Matches items={props?.data}/>
+          <div className="max-w-screen-sm px-5 mx-auto sm:px-3 lg:max-w-screen-md md:px-0 2xl:max-w-screen-lg">
+            <Matches items={props?.data}/>
+          </div>
         </Main>
         
         <Footer/>

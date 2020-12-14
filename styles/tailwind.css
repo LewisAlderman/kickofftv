@@ -12,4 +12,13 @@
 			min-height: -webkit-fill-available; 
 		}
 	}
+
+	.display-breakpoint::after {
+		content: "N/A";
+		@screen sm { content: "sm"; }
+		@screen md { content: "md"; }
+		@screen lg { content: "lg"; }
+		@screen xl { content: "xl"; }
+		@screen 2xl { content: "2xl"; }
+	}
 }

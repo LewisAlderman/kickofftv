@@ -2,6 +2,12 @@
 
 * {background: inherit}
 
+body {
+	@supports (-webkit-overflow-scrolling: touch) {
+		-webkit-overflow-scrolling: touch;
+	}
+}
+
 ::selection {
 	border: none;
 	@apply bg-teal-300;

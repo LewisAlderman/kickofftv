@@ -20,6 +20,11 @@ export default function Matches ({items}) {
 	});
 	
 	if (!items) return null;
+
+	const getTeamNameAndAgeGroup = str => {
+		const matches = /(.+)(u\d\d)(?:.+)?$/gi.exec(str);
+		return matches ? [matches[1].trim(), matches[2].trim()] : [str];
+	};
 	
 	return (
 		<div className="mt-12 mb-40 space-y-8 sm:space-y-10 md:space-y-12">
@@ -54,8 +59,22 @@ export default function Matches ({items}) {
 								 * Team names
 								 */}
 								<div className="flex-1 space-y-2">
-									{!!homeTeam && <p className="text-xl font-bold tracking-wide uppercase 2xl:text-2xl md:text-2xl text-blueGray-900">{homeTeam}</p>}
-									{!!awayTeam && <p className="text-xl font-bold tracking-wide uppercase 2xl:text-2xl md:text-2xl text-blueGray-900">{awayTeam}</p>}
+									{[homeTeam, awayTeam].map(team => {
+										if (!team) return null;
+										const [teamName, ageGroup] = getTeamNameAndAgeGroup(team);
+										return (
+											<p className="text-xl font-bold tracking-wide uppercase 2xl:text-2xl md:text-2xl text-blueGray-900" key={team}>
+												{teamName}
+												{ageGroup && (
+													<sup className="inline-block px-1 ml-2 font-mono text-xs text-teal-500 bg-teal-200 rounded-full md:text-sm">
+														<small>
+															{ageGroup}
+														</small>
+													</sup>
+												)}
+											</p>
+										);
+									})}
 	
 									{event && (
 										<p className="text-xs font-medium tracking-wide sm:text-sm text-blueGray-700 rounded-full bg-blueGray-400 inline-block px-3 py-0.5">{event}</p>

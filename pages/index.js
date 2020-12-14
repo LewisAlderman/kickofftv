@@ -12,6 +12,7 @@ import Matches from '@components/Matches';
 // @TODO nav component
 // @TODO footer component
 // @TODO scroll-to-top
+// @TODO filter checkboxes: women | under Xs 
 // @TODO search filter (team|competition|channel) (? could cmd+F)
 // @TODO auto-scroll to nearest time (? perhaps annoying)
 //

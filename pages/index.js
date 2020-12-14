@@ -12,7 +12,7 @@ import Matches from '@components/Matches';
 // @TODO nav component
 // @TODO footer component
 // @TODO scroll-to-top
-// @TODO filter checkboxes: women | under Xs 
+// @TODO filter checkboxes: mens | women | under Xs 
 // @TODO search filter (team|competition|channel) (? could cmd+F)
 // @TODO auto-scroll to nearest time (? perhaps annoying)
 //
@@ -54,7 +54,7 @@ export async function getServerSideProps() {
   const matches = await fetch(URL, {mode: Cors({methods: 'GET'})}).then(res => res.text()).then(body => {    
     const matches = transformBody(body);
     return matches;
-  });;
+  });
   
   return {
     props: {

@@ -9,9 +9,9 @@ const month = today.getUTCMonth() + 1;
 const day = today.getUTCDate();
 
 const dateStr = '' + year + month + day;
-export const URL = `https://www.wheresthematch.com/live-football-on-tv/?showdatestart=${dateStr}`;
+const URL = `https://www.wheresthematch.com/live-football-on-tv/?showdatestart=${dateStr}`;
 
-export const transformBody = body => {
+const transformBody = body => {
   console.log(
     "--------------[FETCHING]--------------\n",
     `${URL}\n`,
@@ -96,23 +96,69 @@ export const transformBody = body => {
   const filterOutChannels = channels => !(channels.length === 1 && channelsToHide.includes(channels[0].title));
 
   /** @type {function(Match): Boolean} */
-  const filterOutWomen = match => !(match.competition.match(/(women|ladies)/i) || match.teams.find(teamName => teamName.match(/(women|ladies)/i)))
+  // const filterOutWomen = match => !(
+  //   match.competition.match(/(women|ladies|female)/i) || match.teams.find(teamName => teamName.match(/(women|ladies|female)/i))
+  //   )
+
+  ///////////////////////////////////////////////////////
+  // Mapper
+
+  /** @type {function(Match): Match} */
+  const applyWomen = match => {
+    const rx = /(women|ladies|female)/i;
+    const comp = () => match.competition && match.competition.match(rx);
+    const event = () => match.event && match.event.match(rx);
+    const team = () => match.teams.length && match.teams.find(teamName => teamName.match(rx));
+    return {
+      ...match,
+      women: Boolean(comp() || event() || team())
+    };
+  };
+
+  /** @type {function(Match): Match} */
+  const applyYouth = match => {    
+    const rx = (/(u|under)\d\ds?/gi);
+    const comp = () => match.competition && match.competition.match(rx);
+    const event = () => match.event && match.event.match(rx);
+    const team = () => match.teams.length && match.teams.find(teamName => teamName.match(rx));
+
+    return {
+      ...match,
+      youth: Boolean(comp() || event() || team())
+    };
+  }
   
   /** @type {function(Match[]): Match[]} */
   const applyFilters = (matches) => {
     return matches.filter((match) => {
-      return filterOutChannels(match.channels) && filterOutWomen(match)
+      return filterOutChannels(match.channels)
     })
   };
 
-  const filteredMatches = applyFilters(unfilteredMatches);
+  const applyMapping = (matches) => {
+    return matches
+      .map(applyWomen)
+      .map(applyYouth)
+  }
 
-  return filteredMatches;
+  const filteredMatches = applyFilters(unfilteredMatches);
+  const mappedMatches = applyMapping(filteredMatches);
+
+  return mappedMatches;
 }
 
 ///////////////////////////////////////////////////////
 // exports / testing
 
+// hide/unhide me for testing scraping
+(async () => {
+  const matches = await fetch(URL, {mode: Cors({methods: 'GET'})}).then(res => res.text()).then(body => {    
+    const matches = transformBody(body);
+    return matches;
+  });
+
+  console.log(matches)
+})()
 
 /**
  * @typedef Teams @type {string[]}
@@ -120,6 +166,8 @@ export const transformBody = body => {
  * @typedef Time @type {string}
  * @typedef Competition @type {string}
  * @typedef Channels @type {{title: string, src: string}[]}
+ * @typedef Women @type {boolean}
+ * @typedef Youth @type {boolean}
  * 
  * @typedef Match
  * @type {{
@@ -128,5 +176,7 @@ export const transformBody = body => {
   * time: Time,
   * competition: Competition,
   * channels: Channels,
+  * women: Women,
+  * youth: Youth,
   * }}
   */

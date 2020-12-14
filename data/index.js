@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 require('isomorphic-fetch');
 const cheerio = require('cheerio');
+const Cors = require('cors');
 
 const today = new Date();
 const year = today.getUTCFullYear();
@@ -33,9 +34,21 @@ export const transformBody = body => {
       .split(' v ')
       .map(str => str.trim());
     
+    if (!teams || !teams.length || teams.length !== 2 || teams.find(t => !t)) {
+      console.warn('Teams not properly accrued');
+      return [];
+    }
+      
     return teams;
   }
   
+  /** @type {function(cheerio.Cheerio): Event} */
+  const getEventForRow = (row) => {
+    const eventStr = row.find('.fixture-details .event-text').text().trim().replace(/\s\s+/g, ' ');
+      
+    return eventStr || null;
+  }
+
   /** @type {function(cheerio.Cheerio): Time} */
   const getTimeForRow = (row) => {
     const el = $(row.find('.time'));
@@ -64,6 +77,7 @@ export const transformBody = body => {
   const formatMatchFromRow = (row) => {
     return {
       teams: getTeamsForRow(row),
+      event: getEventForRow(row),
       time: getTimeForRow(row),
       competition: getCompetitionForRow(row),
       channels: getChannelsForRow(row),
@@ -96,9 +110,13 @@ export const transformBody = body => {
   return filteredMatches;
 }
 
+///////////////////////////////////////////////////////
+// exports / testing
+
 
 /**
  * @typedef Teams @type {string[]}
+ * @typedef Event @type {string}
  * @typedef Time @type {string}
  * @typedef Competition @type {string}
  * @typedef Channels @type {{title: string, src: string}[]}
@@ -106,6 +124,7 @@ export const transformBody = body => {
  * @typedef Match
  * @type {{
   * teams: Teams,
+  * event: Event,
   * time: Time,
   * competition: Competition,
   * channels: Channels,

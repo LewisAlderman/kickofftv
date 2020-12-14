@@ -1,6 +1,6 @@
+import Cors from 'cors';
+import { transformBody, URL } from '@data/index';
 import Head from 'next/head'
-import Cors from 'cors'
-import { URL, transformBody } from '@data/index';
 import Navigation from '@components/Navigation';
 import Footer from '@components/Footer';
 import Main from '@components/Main';
@@ -50,8 +50,8 @@ function Homepage(props) {
 export async function getServerSideProps() {  
   const matches = await fetch(URL, {mode: Cors({methods: 'GET'})}).then(res => res.text()).then(body => {    
     const matches = transformBody(body);
-    return matches
-  });
+    return matches;
+  });;
   
   return {
     props: {

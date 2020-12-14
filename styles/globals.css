@@ -1,3 +1,8 @@
 /* globals */
 
 * {background: inherit}
+
+::selection {
+	border: none;
+	@apply bg-teal-300;
+}

@@ -4,11 +4,12 @@
  */
 
 export default function Matches ({items}) {	
+	console.log(items)
 	if (!items) return null;
 	
 	return (
 		<div className="mt-12 mb-40 space-y-12">
-			{items.map(({teams, channels, competition, time}, i) => {
+			{items.map(({teams, channels, competition, time, event}, i) => {
 				const [homeTeam, awayTeam] = teams;
 				const prevDiffTime = i === 0 || items[i-1].time !== time;
 				const nextSameTime = items[i+1]?.time === time;
@@ -34,8 +35,10 @@ export default function Matches ({items}) {
 							
 							{/* Team names */}
 							<div className="flex-1 space-y-2">
-								<p className="text-2xl font-bold tracking-wide uppercase text-blueGray-900">{homeTeam}</p>
-								<p className="text-2xl font-bold tracking-wide uppercase text-blueGray-900">{awayTeam}</p>
+								{!!homeTeam && <p className="text-2xl font-bold tracking-wide uppercase text-blueGray-900">{homeTeam}</p>}
+								{!!awayTeam && <p className="text-2xl font-bold tracking-wide uppercase text-blueGray-900">{awayTeam}</p>}
+
+								<p className="text-xl font-medium tracking-wide text-blueGray-900">{event}</p>
 
 								{/* competition */}
 								<p className="font-normal text-warmGray-500"> {competition} </p>

@@ -1,13 +1,9 @@
-
 /**
  * @param {Object} props 
  * @param {import('@data/index').Match[]} props.items 
  */
 
-export default function Matches ({items}) {
-
-	console.log({items})
-	
+export default function Matches ({items}) {	
 	if (!items) return null;
 	
 	return (
@@ -51,7 +47,7 @@ export default function Matches ({items}) {
 										{channels.map(({src, title}) => {
 											return (
 												<div className="" key={title}>
-													<img src={src} alt={title} title={title} width="100px" className="transform-gpu blend-mode-darken" />
+													<img src={src} alt={title} title={title} loading="lazy" width="100px" height={title.match(/now\s?tv/i) ? "35px" : "19px"} className="transform-gpu blend-mode-darken" />
 												</div>
 											)
 										})}

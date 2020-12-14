@@ -6,8 +6,20 @@ import Footer from '@components/Footer';
 import Main from '@components/Main';
 import Matches from '@components/Matches';
 
+// Functionality
+// ======
+// @TODO display total fixture count
 // @TODO nav component
 // @TODO footer component
+// @TODO scroll-to-top
+// @TODO search filter (team|competition|channel) (? could cmd+F)
+// @TODO auto-scroll to nearest time (? perhaps annoying)
+//
+// Styling
+// ======
+// @TODO do something with dates formatting
+// @TODO past/started match style
+// @TODO auto-scroll to nearest time (? perhaps annoying)
 
 /**
  * @param {Object} props 
@@ -15,8 +27,6 @@ import Matches from '@components/Matches';
  */
 
 function Homepage(props) {    
-  console.log(props)
-  
   return (
     <>
       <Head>

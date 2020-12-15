@@ -9,9 +9,12 @@ const month = today.getUTCMonth() + 1;
 const day = today.getUTCDate();
 
 const dateStr = '' + year + month + day;
-const URL = `https://www.wheresthematch.com/live-football-on-tv/?showdatestart=${dateStr}`;
 
-const transformBody = body => {
+// export me after testing
+export const URL = `https://www.wheresthematch.com/live-football-on-tv/?showdatestart=${dateStr}`;
+
+// export me after testing
+export const transformBody = body => {
   console.log(
     "--------------[FETCHING]--------------\n",
     `${URL}\n`,
@@ -72,6 +75,12 @@ const transformBody = body => {
     }));
     return imgUrls;
   }
+
+  /** @type {function(cheerio.Cheerio): boolean */
+  const getTelevisedForRow = (row) => {
+    const nonTV = row.html().match(/no(n|t)-televised/);
+    return !nonTV;
+  }
   
   /** @type {function(cheerio.Cheerio): Match} */
   const formatMatchFromRow = (row) => {
@@ -81,6 +90,7 @@ const transformBody = body => {
       time: getTimeForRow(row),
       competition: getCompetitionForRow(row),
       channels: getChannelsForRow(row),
+      televised: getTelevisedForRow(row),
     }
   }
 
@@ -117,7 +127,7 @@ const transformBody = body => {
 
   /** @type {function(Match): Match} */
   const applyYouth = match => {    
-    const rx = (/(u|under)\d\ds?/gi);
+    const rx = (/(u|under)\s?\d\d(s|'s)?/gi);
     const comp = () => match.competition && match.competition.match(rx);
     const event = () => match.event && match.event.match(rx);
     const team = () => match.teams.length && match.teams.find(teamName => teamName.match(rx));
@@ -144,6 +154,7 @@ const transformBody = body => {
   const filteredMatches = applyFilters(unfilteredMatches);
   const mappedMatches = applyMapping(filteredMatches);
 
+  // console.log(mappedMatches)
   return mappedMatches;
 }
 
@@ -151,14 +162,14 @@ const transformBody = body => {
 // exports / testing
 
 // hide/unhide me for testing scraping
-(async () => {
-  const matches = await fetch(URL, {mode: Cors({methods: 'GET'})}).then(res => res.text()).then(body => {    
-    const matches = transformBody(body);
-    return matches;
-  });
+// (async () => {
+//   const matches = await fetch(URL, {mode: Cors({methods: 'GET'})}).then(res => res.text()).then(body => {    
+//     const matches = transformBody(body);
+//     return matches;
+//   });
 
-  console.log(matches)
-})()
+//   console.log(matches)
+// })()
 
 /**
  * @typedef Teams @type {string[]}
@@ -178,5 +189,6 @@ const transformBody = body => {
   * channels: Channels,
   * women: Women,
   * youth: Youth,
+  * televised: boolean,
   * }}
   */

@@ -20,11 +20,6 @@ export default function Matches ({items}) {
 	});
 	
 	if (!items) return null;
-
-	const getTeamNameAndAgeGroup = str => {
-		const matches = /(.+)(u\d\d)(?:.+)?$/gi.exec(str);
-		return matches ? [matches[1].trim(), matches[2].trim()] : [str];
-	};
 	
 	return (
 		<div className="mt-12 mb-40 space-y-8 sm:space-y-10 md:space-y-12">
@@ -107,3 +102,10 @@ export default function Matches ({items}) {
 		</div>
 	)
 }
+
+/** @param {string} str */
+function getTeamNameAndAgeGroup (str) {
+	const rx = /(u|under)\s?\d\d('s|s)?/gi;
+	const match = str.match(rx);
+	return match?.[0] ? [str.replace(rx, '').trim(), match[0].trim()] : [str];
+};

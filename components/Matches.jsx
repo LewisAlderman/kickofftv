@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
  * @param {Object} props 
  * @param {import('@data/index').Match[]} props.items 
  */
-
+ 
 export default function Matches ({items}) {	
 	useEffect(() => {
 		console.log(items);

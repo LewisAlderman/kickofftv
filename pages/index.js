@@ -1,6 +1,8 @@
+import Head from 'next/head';
 import Cors from 'cors';
+
 import { transformBody, URL } from '@data/index';
-import Head from 'next/head'
+
 import Navigation from '@components/Navigation';
 import Footer from '@components/Footer';
 import Main from '@components/Main';

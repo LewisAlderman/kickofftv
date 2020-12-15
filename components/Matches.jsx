@@ -30,7 +30,7 @@ export default function Matches ({items}) {
 				
 				return (
 					<div key={teams.join() + "_" + event}>
-						<div className="flex flex-wrap sm:flex-nowrap">
+						<div className="flex flex-row">
 							{/**
 							 * Time
 							 */}

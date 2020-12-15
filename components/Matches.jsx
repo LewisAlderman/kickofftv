@@ -1,5 +1,6 @@
 import useWindowResize from 'hooks/useWindowResize';
-import { useState } from 'react';
+import debounce from 'lodash.debounce';
+import { useEffect, useState } from 'react';
 
 /**
  * @param {Object} props 
@@ -7,17 +8,17 @@ import { useState } from 'react';
  */
 
 export default function Matches ({items}) {	
-	console.log(items)
+	useEffect(() => {
+		console.log(items);
+	}, [items.length])
 
 	const [imgSize, setImgSize] = useState('100px');
 	
-	useWindowResize((w) => {
-		console.log('width:', w.innerWidth)
-
+	useWindowResize(debounce((w) => {
 		if (w.innerWidth >= 1536) setImgSize('130px');
 		else if (w.innerWidth <= 640) setImgSize('85px');
 		else setImgSize('100px');
-	});
+	}, 250));
 	
 	if (!items) return null;
 	

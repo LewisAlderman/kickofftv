@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
  */
  
 export default function Matches ({items}) {		
+	const [now] = useState(new Date());
+	
 	useEffect(() => {
 		console.log('items.length changed', items);
 	}, [items.length])
@@ -30,6 +32,10 @@ export default function Matches ({items}) {
 				const [homeTeam, awayTeam] = teams;
 				const prevDiffTime = i === 0 || items[i-1].time !== time;
 				const nextSameTime = items[i+1]?.time === time;
+
+				const [hour, minute] = time.replace(/(a|p)m/i, '').split(':');
+				const am = time.match(/am/i);
+				const isPast = new Date(now.toISOString().replace(/\d\d:\d\d:\d\d/i, `${am ? hour : +hour + 12}:${minute}:00`)) < now;
 				
 				return (
 					<div key={time + (teams[0] || event)}>
@@ -41,7 +47,7 @@ export default function Matches ({items}) {
 								<div className="relative w-full h-full">
 									{/* text */}
 									{Boolean(i === 0 || prevDiffTime) && (
-										<p className="relative z-10 text-xs leading-10 uppercase sm:text-sm text-blueGray-500">{time}</p>
+										<p className={`relative z-10 text-xs leading-10 uppercase sm:text-sm ${isPast ? 'text-blueGray-300' : ' text-blueGray-500'}`}>{time}</p>
 									)}
 									{/* vertical bar */}
 									<div className={

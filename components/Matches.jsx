@@ -8,11 +8,11 @@ import { useEffect, useState } from 'react';
  * @param {import('@data/index').Match[]} props.items 
  */
  
-export default function Matches ({items}) {	
-	const filters = useFiltersContext();
+export default function Matches ({items}) {		
+	console.log('render')
 	
 	useEffect(() => {
-		console.log(items);
+		console.log('items.length changed', items);
 	}, [items.length])
 
 	const [imgSize, setImgSize] = useState('100px');
@@ -34,7 +34,7 @@ export default function Matches ({items}) {
 				const nextSameTime = items[i+1]?.time === time;
 				
 				return (
-					<div key={teams.join() + "_" + event}>
+					<div key={time + (teams[0] || event)}>
 						<div className="flex flex-row">
 							{/**
 							 * Time

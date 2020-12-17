@@ -1,7 +1,9 @@
 import Head from 'next/head';
 import Cors from 'cors';
+import React, { useState } from 'react'
 
 import { transformBody, URL } from '@data/index';
+import { DEV } from '../constants.ts';
 
 import Navigation from '@components/Navigation';
 import Footer from '@components/Footer';
@@ -9,7 +11,7 @@ import Main from '@components/Main';
 import Matches from '@components/Matches';
 import Filters from '@components/Filters';
 import { FiltersContextProvider, INITIAL_FILTERS, MatchesContextProvider } from 'contexts';
-import { useState } from 'react';
+
 
 // Functionality
 // ======
@@ -33,44 +35,23 @@ import { useState } from 'react';
  */
  
 function Homepage(props) {    
-  const [filters, setFilters] = useState(INITIAL_FILTERS);
-  const matches = props?.data ?? [];
+  const [filters, setFilters] = useState(() => INITIAL_FILTERS);
+  const [matches, setMatches] = useState(() => props?.data ?? [])
+
+  const reset = () => setFilters(INITIAL_FILTERS)
 
   const toggleFilter = ({target: {id, value}}) => {
-    console.log(id, value)
-    setFilters({...filters, [id]: value});
+    setFilters(() => ({...filters, [id]: value}));
   }
 
-  const filtered = matches
-    .filter(({women}, _, arr) => {
-      console.log('initial filter', arr.length, arr)
-      return filters.gender === 'female' ? women : filters.gender === 'male' ? !women : (women || !women)
-    })
-    .filter(({youth}, _, arr) => {
-      console.log('after gender', arr.length, arr)
-      return filters.youth == youth
-    })
-    .filter(({televised}, _, arr) => {
-      console.log('after youth', arr.length, arr)
-
-      const out = filters.televised ? televised == true : filters.televised === false ? televised === false : !!televised;
-
-      console.log('after televised', arr.length, arr)
-      
-      return out;
-    })
-
-  /*
-  && (
-    filters.youth
-    ? youth 
-    : !youth
-  ) && (
-    filters.televised
-    ? televised
-    : !televised
-  )
-  */
+  const filtered = [].concat(matches
+    .reduce((out, cur, _, arr) => {
+      const {women, youth, televised} = cur;
+      if (filters.gender === 'male' && women) return out;
+      if (filters.youth && !youth) return out;
+      if (filters.televised && !televised) return out;
+      return out.concat(cur)
+    }, []))
   
   return (
     <>
@@ -80,25 +61,21 @@ function Homepage(props) {
       </Head>
 
       <div className="flex flex-col min-h-screen ios-safari-full-height bg-blueGray-50 debug-screens">
-        <MatchesContextProvider values={matches}>
-          <FiltersContextProvider value={filters}>
-            <Navigation />
-            <Main>
-              <Filters onFilterChange={toggleFilter} />
+      <Navigation />
+      <Main>
+        <Filters onFilterChange={toggleFilter} reset={reset} />
 
-              <div>
-                <pre>{JSON.stringify(filters, null, 2)}</pre>
-              </div>
-
-              <p>
-                Matches: <span>{filtered?.length ?? 0}</span>
-              </p>
-              
-              <Matches items={filtered} />
-            </Main>
-            <Footer />
-          </FiltersContextProvider>
-        </MatchesContextProvider>
+        <p>
+          Matches: <span>{filtered?.length ?? 0}</span>
+        </p>
+        
+        {DEV() && <div>
+          <pre>{JSON.stringify(filters, null, 2)}</pre>
+        </div>}
+        
+        <Matches items={filtered} />
+      </Main>
+      <Footer />
       </div>
     </>
   )

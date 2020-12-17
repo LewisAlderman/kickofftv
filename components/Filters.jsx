@@ -1,7 +1,7 @@
 import React from 'react';
 import {fields} from '../contexts'
 
-const Filters = ({onFilterChange}) => {	
+const Filters = ({onFilterChange, reset}) => {	
 	return (
 		<div className="my-5">
 			<div className="flex px-6 py-5 rounded-lg justify-evenly bg-blueGray-200">
@@ -17,6 +17,10 @@ const Filters = ({onFilterChange}) => {
 						</span>
 					)
 				})}
+
+				<button onClick={reset} type="reset">
+					Reset
+				</button>
 			</div>
 		</div>
 	)

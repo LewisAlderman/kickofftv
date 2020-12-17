@@ -9,8 +9,6 @@ import { useEffect, useState } from 'react';
  */
  
 export default function Matches ({items}) {		
-	console.log('render')
-	
 	useEffect(() => {
 		console.log('items.length changed', items);
 	}, [items.length])
@@ -28,7 +26,7 @@ export default function Matches ({items}) {
 	return (
 		<div className="mt-12 mb-40 space-y-8 sm:space-y-10 md:space-y-12">
 			{items
-				.map(({teams, channels, competition, time, event}, i) => {
+				.map(({teams, channels, competition, time, event, women}, i) => {
 				const [homeTeam, awayTeam] = teams;
 				const prevDiffTime = i === 0 || items[i-1].time !== time;
 				const nextSameTime = items[i+1]?.time === time;
@@ -59,19 +57,26 @@ export default function Matches ({items}) {
 								 * Team names
 								 */}
 								<div className="flex-1 space-y-2">
-									{[homeTeam, awayTeam].map(team => {
+									{[homeTeam, awayTeam].map((team) => {
 										if (!team) return null;
 										const [teamName, ageGroup] = getTeamNameAndAgeGroup(team);
+										
 										return (
 											<p className="text-xl font-bold tracking-wide uppercase 2xl:text-2xl md:text-2xl text-blueGray-900" key={team}>
 												{teamName}
-												{ageGroup && (
+												{women ? (
+													<sup className="inline-block px-1 ml-2 font-mono text-xs tracking-tight text-pink-400 bg-pink-100 rounded-full md:text-sm">
+													<small>
+														LADIES
+													</small>
+												</sup>
+												) : ageGroup ? (
 													<sup className="inline-block px-1 ml-2 font-mono text-xs text-teal-500 bg-teal-200 rounded-full md:text-sm">
 														<small>
 															{ageGroup}
 														</small>
 													</sup>
-												)}
+												) : null}
 											</p>
 										);
 									})}
@@ -112,5 +117,5 @@ export default function Matches ({items}) {
 function getTeamNameAndAgeGroup (str) {
 	const rx = /(u|under)\s?\d\d('s|s)?/gi;
 	const match = str.match(rx);
-	return match?.[0] ? [str.replace(rx, '').trim(), match[0].trim()] : [str];
+	return match?.[0] ? [str.replace(rx, '').trim(), match[0].replace(/.+(\d\d).+/, 'U$1')] : [str];
 };

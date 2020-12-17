@@ -7,6 +7,9 @@ import Navigation from '@components/Navigation';
 import Footer from '@components/Footer';
 import Main from '@components/Main';
 import Matches from '@components/Matches';
+import Filters from '@components/Filters';
+import { FiltersContextProvider, INITIAL_FILTERS, MatchesContextProvider } from 'contexts';
+import { useState } from 'react';
 
 // Functionality
 // ======
@@ -28,8 +31,47 @@ import Matches from '@components/Matches';
  * @param {Object} props 
  * @param {import('@data/index').Match[]} props.data 
  */
-
+ 
 function Homepage(props) {    
+  const [filters, setFilters] = useState(INITIAL_FILTERS);
+  const matches = props?.data ?? [];
+
+  const toggleFilter = ({target: {id, value}}) => {
+    console.log(id, value)
+    setFilters({...filters, [id]: value});
+  }
+
+  const filtered = matches
+    .filter(({women}, _, arr) => {
+      console.log('initial filter', arr.length, arr)
+      return filters.gender === 'female' ? women : filters.gender === 'male' ? !women : (women || !women)
+    })
+    .filter(({youth}, _, arr) => {
+      console.log('after gender', arr.length, arr)
+      return filters.youth == youth
+    })
+    .filter(({televised}, _, arr) => {
+      console.log('after youth', arr.length, arr)
+
+      const out = filters.televised ? televised == true : filters.televised === false ? televised === false : !!televised;
+
+      console.log('after televised', arr.length, arr)
+      
+      return out;
+    })
+
+  /*
+  && (
+    filters.youth
+    ? youth 
+    : !youth
+  ) && (
+    filters.televised
+    ? televised
+    : !televised
+  )
+  */
+  
   return (
     <>
       <Head>
@@ -38,15 +80,25 @@ function Homepage(props) {
       </Head>
 
       <div className="flex flex-col min-h-screen ios-safari-full-height bg-blueGray-50 debug-screens">
-        <Navigation/>
+        <MatchesContextProvider values={matches}>
+          <FiltersContextProvider value={filters}>
+            <Navigation />
+            <Main>
+              <Filters onFilterChange={toggleFilter} />
 
-        <Main>
-          <div className="max-w-screen-sm px-5 mx-auto sm:px-3 lg:max-w-screen-md md:px-0 2xl:max-w-screen-lg">
-            <Matches items={props?.data}/>
-          </div>
-        </Main>
-        
-        <Footer/>
+              <div>
+                <pre>{JSON.stringify(filters, null, 2)}</pre>
+              </div>
+
+              <p>
+                Matches: <span>{filtered?.length ?? 0}</span>
+              </p>
+              
+              <Matches items={filtered} />
+            </Main>
+            <Footer />
+          </FiltersContextProvider>
+        </MatchesContextProvider>
       </div>
     </>
   )

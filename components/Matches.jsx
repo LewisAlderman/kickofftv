@@ -1,3 +1,4 @@
+import { useFiltersContext } from 'contexts';
 import useWindowResize from 'hooks/useWindowResize';
 import debounce from 'lodash.debounce';
 import { useEffect, useState } from 'react';
@@ -8,6 +9,8 @@ import { useEffect, useState } from 'react';
  */
  
 export default function Matches ({items}) {	
+	const filters = useFiltersContext();
+	
 	useEffect(() => {
 		console.log(items);
 	}, [items.length])
@@ -24,7 +27,8 @@ export default function Matches ({items}) {
 	
 	return (
 		<div className="mt-12 mb-40 space-y-8 sm:space-y-10 md:space-y-12">
-			{items.map(({teams, channels, competition, time, event}, i) => {
+			{items
+				.map(({teams, channels, competition, time, event}, i) => {
 				const [homeTeam, awayTeam] = teams;
 				const prevDiffTime = i === 0 || items[i-1].time !== time;
 				const nextSameTime = items[i+1]?.time === time;
@@ -84,7 +88,7 @@ export default function Matches ({items}) {
 								 * Channels
 								 */}
 								<div className="mt-4 sm:mt-0 sm:ml-6">
-									<div className="flex flex-wrap items-center sm:flex-nowrap sm:space-y-2 sm:flex-col">
+									<div className="flex flex-wrap items-center sm:flex-nowrap sm:space-y-2 sm:flex-col" style={{minHeight: 20}}>
 											{channels.map(({src, title}) => {
 												return (
 													<div className="mb-1 mr-2 sm:mr-0 sm:mb-0" key={title}>

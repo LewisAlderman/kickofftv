@@ -3,6 +3,9 @@
 * {background: inherit}
 
 body {
+	overscroll-behavior-y: contain;
+	-webkit-overflow-scrolling: touch;
+	
 	@supports (-webkit-overflow-scrolling: touch) {
 		-webkit-overflow-scrolling: touch;
 	}

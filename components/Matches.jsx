@@ -1,7 +1,9 @@
 import { useFiltersContext } from 'contexts';
 import useWindowResize from 'hooks/useWindowResize';
 import debounce from 'lodash.debounce';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import dayjs from 'dayjs'
+import { DEV } from '../constants.ts';
 
 /**
  * @param {Object} props 
@@ -10,6 +12,11 @@ import { useEffect, useState } from 'react';
  
 export default function Matches ({items}) {		
 	const [now] = useState(new Date());
+	const ref = useRef(null);
+	
+	if (DEV() && typeof window !== 'undefined') {
+		window.dayjs = dayjs
+	}
 	
 	useEffect(() => {
 		console.log('items.length changed', items);
@@ -26,20 +33,20 @@ export default function Matches ({items}) {
 	if (!items) return null;
 	
 	return (
+		<>
+		<button className="px-3 bg-gray-600" onClick={() => ref?.current?.scrollIntoView({behavior: 'smooth'})}>Go</button>
 		<div className="mt-12 mb-40 space-y-8 sm:space-y-10 md:space-y-12">
 			{items
 				.map(({id, teams, channels, competition, time, event, women, postponed}, i) => {
 				const [homeTeam, awayTeam] = teams;
+				
 				const prevDiffTime = i === 0 || items[i-1].time !== time;
 				const nextSameTime = items[i+1]?.time === time;
-
-				const [hour, minute] = time.replace(/(a|p)m/i, '').split(':');
-				const am = time.match(/am/i);
-				const isPast = new Date(now.toISOString().replace(/\d\d:\d\d:\d\d/i, `${am ? hour : +hour + 12}:${minute}:00`)) < now;
+				const isPast = now > dayjs(time).add(90, 'minute');
 				
 				return (
 					<div key={id}>
-						<div className="flex flex-row">
+						<div className="flex flex-row" ref={!ref.current && isPast ? ref : null}>
 							{/**
 							 * Time
 							 */}
@@ -47,7 +54,9 @@ export default function Matches ({items}) {
 								<div className="relative w-full h-full">
 									{/* text */}
 									{Boolean(i === 0 || prevDiffTime) && (
-										<p className={`relative z-10 text-xs leading-10 uppercase sm:text-sm ${isPast ? 'text-blueGray-300' : ' text-blueGray-500'}`}>{time}</p>
+										<p className={`relative z-10 text-xs leading-10 uppercase sm:text-sm ${isPast ? 'text-blueGray-300' : ' text-blueGray-500'}`}>
+											{dayjs(time).format('h:mmA')}
+										</p>
 									)}
 									{/* vertical bar */}
 									<div className={
@@ -129,6 +138,7 @@ export default function Matches ({items}) {
 				)
 			})}
 		</div>
+		</>
 	)
 }
 

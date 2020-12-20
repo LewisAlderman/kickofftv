@@ -11,6 +11,7 @@ import Main from '@components/Main';
 import Matches from '@components/Matches';
 import Filters from '@components/Filters';
 import { FiltersContextProvider, INITIAL_FILTERS, MatchesContextProvider } from 'contexts';
+import dayjs from 'dayjs';
 
 
 // Functionality
@@ -75,7 +76,7 @@ function Homepage(props) {
 }
 
 function groupByFilters (matches) {
-  return matches.reduce((groups, cur) => {
+  return matches.reduce((groups, cur) => {    
     groups.gender.both.push(cur);
     if (cur.women) groups.gender.female.push(cur);
     else groups.gender.male.push(cur);

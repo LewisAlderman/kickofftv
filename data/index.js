@@ -2,6 +2,7 @@
 require('isomorphic-fetch');
 const cheerio = require('cheerio');
 const Cors = require('cors');
+const dayjs = require('dayjs')
 
 const today = new Date();
 const year = today.getUTCFullYear();
@@ -55,8 +56,25 @@ export const transformBody = body => {
   /** @type {function(cheerio.Cheerio): Time} */
   const getTimeForRow = (row) => {
     const el = $(row.find('.time'));
-    const str = el.text().trim();
-    return str;
+    let str = el.text().trim();
+    const isAM = !!str.match(/am/i), isPM = !isAM;
+
+    if (!str.match(/^\d\d/)) str = str
+      .replace(/^(\d)/, "0$1");
+
+    str = str.replace(/[a-zA-Z]+/i, '');
+    let [hours, mins] = str.split(':');
+    
+    if (isAM && hours === '12') hours = '00';
+    if (isPM && hours !== '12') hours = +hours + 12;
+    
+    let date = dayjs()
+      .set('hour', +hours)
+      .set('minute', +mins)
+      .set('second', 0)
+      .set('millisecond', 0)
+    
+    return date.toJSON();
   }
 
   /** @type {function(cheerio.Cheerio): Competition} */
@@ -184,7 +202,7 @@ export const transformBody = body => {
 //     return matches;
 //   });
 
-//   console.log(matches)
+//   // console.log(matches)
 // })()
 
 /**

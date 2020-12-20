@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Cors from 'cors';
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import { transformBody, URL } from '@data/index';
 import { DEV } from '../constants.ts';
@@ -11,7 +11,6 @@ import Main from '@components/Main';
 import Matches from '@components/Matches';
 import Filters from '@components/Filters';
 import { FiltersContextProvider, INITIAL_FILTERS, MatchesContextProvider } from 'contexts';
-import dayjs from 'dayjs';
 
 
 // Functionality
@@ -44,6 +43,8 @@ function Homepage(props) {
   const toggleFilter = ({target: {id, value}}) => {
     setFilters(() => ({...filters, [id]: value}));
   }
+
+  const [latestMatchRef, setLatestMatchRef] = useState(null);
   
   const matches = [].concat(groups.gender[filters.gender]).filter(cur => groups.youth[filters.youth].find(({id})=>id===cur.id) && groups.televised[filters.televised].find(({id}) => id===cur.id))
   
@@ -53,23 +54,38 @@ function Homepage(props) {
         <title>WhensTheMatch</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+        
       <div className="flex flex-col min-h-screen ios-safari-full-height bg-blueGray-50 debug-screens">
+        
       <Navigation />
+      
       <Main>
+        
         <Filters onFilterChange={toggleFilter} reset={reset} groups={groups} />
 
-        <p>
-          Matches: <span>{matches?.length ?? 0}</span>
-        </p>
-        
-        {DEV() && <div>
-          <pre>{JSON.stringify(filters, null, 2)}</pre>
-        </div>}
-        
-        <Matches items={matches} />
+        <div className="flex flex-wrap items-center justify-between">
+          <div className="mb-3 mr-4" style={{flex: 9999, flexBasis: 250}}>
+            <span className="inline-block px-8 py-3 font-mono text-gray-500 bg-gray-100 rounded shadow-inner whitespace-nowrap">
+              Displaying: <span className="px-2 py-0.5 bg-yellow-400 rounded-full text-yellow-700 text-sm font-semibold">{matches?.length ?? 0}/{props.data?.length ?? 0}</span>
+            </span>
+          </div>
+
+          {latestMatchRef && (
+            <button
+            style={{flex: 1, flexBasis: 300}}
+            className="block px-12 py-3 mb-3 font-mono text-teal-900 bg-teal-400 rounded w-96 whitespace-nowrap hover:bg-teal-300"
+            onClick={() => latestMatchRef?.scrollIntoView({behavior: 'smooth'})}>
+              View Latest Game
+            </button>
+          )}
+        </div>
+
+        <Matches items={matches} setLatestMatchRef={setLatestMatchRef} />
+
       </Main>
+
       <Footer />
+      
       </div>
     </>
   )

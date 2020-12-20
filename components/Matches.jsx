@@ -10,7 +10,7 @@ import { DEV } from '../constants.ts';
  * @param {import('@data/index').Match[]} props.items 
  */
  
-export default function Matches ({items}) {		
+export default function Matches ({items, setLatestMatchRef}) {		
 	const [now] = useState(new Date());
 	const ref = useRef(null);
 	
@@ -34,7 +34,6 @@ export default function Matches ({items}) {
 	
 	return (
 		<>
-		<button className="px-3 bg-gray-600" onClick={() => ref?.current?.scrollIntoView({behavior: 'smooth'})}>Go</button>
 		<div className="mt-12 mb-40 space-y-8 sm:space-y-10 md:space-y-12">
 			{items
 				.map(({id, teams, channels, competition, time, event, women, postponed}, i) => {
@@ -46,7 +45,7 @@ export default function Matches ({items}) {
 				
 				return (
 					<div key={id}>
-						<div className="flex flex-row" ref={!ref.current && isPast ? ref : null}>
+						<div className="flex flex-row" ref={isPast ? setLatestMatchRef : null}>
 							{/**
 							 * Time
 							 */}

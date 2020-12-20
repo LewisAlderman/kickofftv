@@ -25,4 +25,13 @@
 	.strike {
 		text-decoration: line-through;
 	}
+
+	@keyframes fade {
+		from {opacity: 0;}
+		to {opacity: 1;}
+	}
+	
+	.fadeIn {
+		animation: fadeIn 500ms ease-out both;
+	}
 }

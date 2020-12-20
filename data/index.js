@@ -113,6 +113,14 @@ export const transformBody = body => {
   ///////////////////////////////////////////////////////
   // Mapper
 
+  let id = 0;
+  /** @type {function(Match): Match */
+  const applyId = match => {
+    return {
+      ...match, id: ++id
+    }
+  };
+
   /** @type {function(Match): Match} */
   const applyWomen = match => {
     const rx = /(women|ladies|female)/i;
@@ -147,6 +155,7 @@ export const transformBody = body => {
 
   const applyMapping = (matches) => {
     return matches
+      .map(applyId)
       .map(applyWomen)
       .map(applyYouth)
   }
@@ -182,6 +191,7 @@ export const transformBody = body => {
  * 
  * @typedef Match
  * @type {{
+  * id: number,
   * teams: Teams,
   * event: Event,
   * time: Time,

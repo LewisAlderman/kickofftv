@@ -36,22 +36,15 @@ import { FiltersContextProvider, INITIAL_FILTERS, MatchesContextProvider } from 
  
 function Homepage(props) {    
   const [filters, setFilters] = useState(() => INITIAL_FILTERS);
-  const [matches, setMatches] = useState(() => props?.data ?? [])
+  const [groups] = useState(() => groupByFilters(props.data))
 
   const reset = () => setFilters(INITIAL_FILTERS)
 
   const toggleFilter = ({target: {id, value}}) => {
     setFilters(() => ({...filters, [id]: value}));
   }
-
-  const filtered = [].concat(matches
-    .reduce((out, cur, _, arr) => {
-      const {women, youth, televised} = cur;
-      if (filters.gender === 'male' && women) return out;
-      if (filters.youth && !youth) return out;
-      if (filters.televised && !televised) return out;
-      return out.concat(cur)
-    }, []))
+  
+  const matches = [].concat(groups.gender[filters.gender]).filter(cur => groups.youth[filters.youth].find(({id})=>id===cur.id) && groups.televised[filters.televised].find(({id}) => id===cur.id))
   
   return (
     <>
@@ -63,22 +56,40 @@ function Homepage(props) {
       <div className="flex flex-col min-h-screen ios-safari-full-height bg-blueGray-50 debug-screens">
       <Navigation />
       <Main>
-        <Filters onFilterChange={toggleFilter} reset={reset} />
+        <Filters onFilterChange={toggleFilter} reset={reset} groups={groups} />
 
         <p>
-          Matches: <span>{filtered?.length ?? 0}</span>
+          Matches: <span>{matches?.length ?? 0}</span>
         </p>
         
         {DEV() && <div>
           <pre>{JSON.stringify(filters, null, 2)}</pre>
         </div>}
         
-        <Matches items={filtered} />
+        <Matches items={matches} />
       </Main>
       <Footer />
       </div>
     </>
   )
+}
+
+function groupByFilters (matches) {
+  return matches.reduce((groups, cur) => {
+    groups.gender.both.push(cur);
+    if (cur.women) groups.gender.female.push(cur);
+    else groups.gender.male.push(cur);
+    
+    if (cur.youth) groups.youth.true.push(cur);
+    else groups.youth.false.push(cur);
+    
+    groups.televised.both.push(cur);
+    if (cur.televised) groups.televised.true.push(cur);
+    else groups.televised.false.push(cur);
+  
+    return groups;
+    
+  }, {gender: {male: [], female: [], both: []}, youth: {true: [], false: []}, televised: {true: [], false: [], both: []}})
 }
 
 export async function getServerSideProps() {  

@@ -1,9 +1,11 @@
 import Head from 'next/head';
 import Cors from 'cors';
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { transformBody, URL } from '@data/index';
 import { DEV } from '../constants.ts';
+
+import usePageScroll from '../hooks/usePageScroll'
 
 import Navigation from '@components/Navigation';
 import Footer from '@components/Footer';
@@ -11,6 +13,7 @@ import Main from '@components/Main';
 import Matches from '@components/Matches';
 import Filters from '@components/Filters';
 import { FiltersContextProvider, INITIAL_FILTERS, MatchesContextProvider } from 'contexts';
+import debounce from 'lodash.debounce';
 
 
 // Functionality
@@ -37,6 +40,11 @@ import { FiltersContextProvider, INITIAL_FILTERS, MatchesContextProvider } from 
 function Homepage(props) {    
   const [filters, setFilters] = useState(() => INITIAL_FILTERS);
   const [groups] = useState(() => groupByFilters(props.data))
+  const [isScrollToTopVisible, setScrollToTopVisible] = useState(false);
+
+  usePageScroll(debounce(({target: {documentElement}}) => {
+    setScrollToTopVisible(documentElement.scrollTop > (documentElement.scrollHeight / 3))
+  }, 250))
 
   const reset = () => setFilters(INITIAL_FILTERS)
 
@@ -60,6 +68,14 @@ function Homepage(props) {
       <Navigation />
       
       <Main>
+
+        {/* SCROLL UP */}
+        {isScrollToTopVisible && (
+          <button className="fixed z-10 w-12 h-12 px-2 py-1 text-center rounded-full opacity-20 bg-blueGray-200 text-blueGray-500 right-3 bottom-3 hover:opacity-100"
+          onClick={() => typeof document !== 'undefined' && (document.documentElement.scrollTop = 0)}>
+            <svg className="w-8 h-8" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4H18V6H6zM11 14L11 20 13 20 13 14 18 14 12 8 6 14z"></path></svg>
+          </button>
+        )}
         
         <Filters onFilterChange={toggleFilter} reset={reset} groups={groups} />
 
@@ -70,12 +86,16 @@ function Homepage(props) {
             </span>
           </div>
 
+          {/* SCROLL DOWN */}
           {latestMatchRef && (
             <button
             style={{flex: 1, flexBasis: 300}}
-            className="block px-12 py-3 mb-3 font-mono text-teal-900 bg-teal-400 rounded w-96 whitespace-nowrap hover:bg-teal-300"
+            className="flex items-center px-12 py-3 mb-3 font-mono text-teal-900 bg-teal-400 rounded w-96 whitespace-nowrap hover:bg-teal-300"
             onClick={() => latestMatchRef?.scrollIntoView({behavior: 'smooth'})}>
-              View Latest Game
+              <span className="relative mx-auto">
+                View Latest Game{' '}
+                <svg className="absolute top-1 -right-9 bg-none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path className="text-teal-100 fill-current" d="M18 12L13 12 13 6 11 6 11 12 6 12 12 19z"></path></svg>
+              </span>
             </button>
           )}
         </div>

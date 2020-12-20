@@ -1,6 +1,6 @@
 /* globals */
 
-* {background: inherit}
+* {background: inherit; scroll-behavior: smooth}
 
 body {
 	overscroll-behavior-y: contain;

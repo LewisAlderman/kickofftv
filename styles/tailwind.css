@@ -21,4 +21,8 @@
 		@screen xl { content: "xl"; }
 		@screen 2xl { content: "2xl"; }
 	}
+
+	.strike {
+		text-decoration: line-through;
+	}
 }

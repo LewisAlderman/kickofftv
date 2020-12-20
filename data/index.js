@@ -81,6 +81,12 @@ export const transformBody = body => {
     const nonTV = row.html().match(/no(n|t)-televised/);
     return !nonTV;
   }
+
+  /** @type {function(cheerio.Cheerio): boolean */
+  const getPostponedForRow = (row) => {
+    const postponed = row.html().match(/postponed/i);
+    return Boolean(postponed);
+  }
   
   /** @type {function(cheerio.Cheerio): Match} */
   const formatMatchFromRow = (row) => {
@@ -91,6 +97,7 @@ export const transformBody = body => {
       competition: getCompetitionForRow(row),
       channels: getChannelsForRow(row),
       televised: getTelevisedForRow(row),
+      postponed: getPostponedForRow(row),
     }
   }
 
@@ -200,5 +207,6 @@ export const transformBody = body => {
   * women: Women,
   * youth: Youth,
   * televised: boolean,
+  * postponed: boolean,
   * }}
   */

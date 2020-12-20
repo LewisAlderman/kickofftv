@@ -28,7 +28,7 @@ export default function Matches ({items}) {
 	return (
 		<div className="mt-12 mb-40 space-y-8 sm:space-y-10 md:space-y-12">
 			{items
-				.map(({teams, channels, competition, time, event, women}, i) => {
+				.map(({id, teams, channels, competition, time, event, women, postponed}, i) => {
 				const [homeTeam, awayTeam] = teams;
 				const prevDiffTime = i === 0 || items[i-1].time !== time;
 				const nextSameTime = items[i+1]?.time === time;
@@ -38,12 +38,12 @@ export default function Matches ({items}) {
 				const isPast = new Date(now.toISOString().replace(/\d\d:\d\d:\d\d/i, `${am ? hour : +hour + 12}:${minute}:00`)) < now;
 				
 				return (
-					<div key={time + (teams[0] || event)}>
+					<div key={id}>
 						<div className="flex flex-row">
 							{/**
 							 * Time
 							 */}
-							<div className='w-24 md:w-28 xl:w-36 sm:mt-1 md:mt-2'>
+							<div className='w-20 md:w-28 xl:w-36 sm:mt-1 md:mt-2'>
 								<div className="relative w-full h-full">
 									{/* text */}
 									{Boolean(i === 0 || prevDiffTime) && (
@@ -68,16 +68,16 @@ export default function Matches ({items}) {
 										const [teamName, ageGroup] = getTeamNameAndAgeGroup(team);
 										
 										return (
-											<p className="text-xl font-bold tracking-wide uppercase 2xl:text-2xl md:text-2xl text-blueGray-900" key={team}>
-												{teamName}
+											<p className="relative text-xl font-bold tracking-wide uppercase 2xl:text-2xl md:text-2xl text-blueGray-900" key={team}>
+												<span className="mr-2">{teamName}</span>
 												{women ? (
-													<sup className="inline-block px-1 ml-2 font-mono text-xs tracking-tight text-pink-400 bg-pink-100 rounded-full md:text-sm">
+													<sup className="inline-block px-1 font-mono text-xs tracking-tight text-pink-400 bg-pink-100 rounded-full md:text-sm">
 													<small>
-														LADIES
+														{window.innerWidth > 600 ? 'LADIES' : "L"}
 													</small>
 												</sup>
 												) : ageGroup ? (
-													<sup className="inline-block px-1 ml-2 font-mono text-xs text-teal-500 bg-teal-200 rounded-full md:text-sm">
+													<sup className="inline-block px-1 font-mono text-xs text-teal-500 bg-teal-200 rounded-full md:text-sm">
 														<small>
 															{ageGroup}
 														</small>
@@ -87,8 +87,21 @@ export default function Matches ({items}) {
 										);
 									})}
 	
-									{event && (
-										<p className="text-xs font-medium tracking-wide sm:text-sm text-blueGray-700 rounded-full bg-blueGray-400 inline-block px-3 py-0.5">{event}</p>
+									{!!(event || postponed) && (
+										<p className="text-xs font-medium tracking-wide strike sm:text-sm">
+											{!!event && (
+												<span className={`rounded-full inline-block mr-2 px-3 py-0.5 text-blueGray-700 bg-blueGray-400 ${postponed && 'strike'}`}>
+												{event}
+											</span>
+											)}
+											{!!postponed && (
+												<span className="rounded-full inline-block px-3 py-0.5 text-rose-700 bg-rose-400 uppercase font-semibold tracking-normal">
+													<small>
+													Postponed
+													</small>
+												</span>
+											)}
+										</p>
 									)}
 	
 									{/* competition */}

@@ -10,7 +10,7 @@ export default function usePageScroll(cb) {
   useEffect(() => {
     if (typeof document !== 'undefined') {
       const handler = (e) => {
-        set(() => document.documentElement.scrollTop)
+        set(() => (document.documentElement.scrollTop || document.body.scrollTop))
         cb(e);
       }
 

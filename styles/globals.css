@@ -5,6 +5,7 @@
 body {
 	overscroll-behavior-y: contain;
 	-webkit-overflow-scrolling: touch;
+	scroll-behavior: smooth !important;
 	
 	@supports (-webkit-overflow-scrolling: touch) {
 		-webkit-overflow-scrolling: touch;

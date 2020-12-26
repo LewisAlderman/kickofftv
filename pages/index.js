@@ -43,7 +43,7 @@ function Homepage(props) {
   const [isScrollToTopVisible, setScrollToTopVisible] = useState(false);
 
   usePageScroll(debounce(({target: {documentElement, body}}) => {
-    setScrollToTopVisible((documentElement.scrollTop || body.scrollTop) > documentElement.clientHeight)
+    setScrollToTopVisible((documentElement.scrollTop || body.scrollTop) > documentElement.clientHeight * 0.5)
   }, 250, {maxWait: 500}))
 
   const reset = () => setFilters(INITIAL_FILTERS)

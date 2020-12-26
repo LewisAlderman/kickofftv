@@ -57,15 +57,16 @@ export const transformBody = body => {
   const getTimeForRow = (row) => {
     const el = $(row.find('.time'));
     let str = el.text().trim();
+    
     const isAM = !!str.match(/am/i), isPM = !isAM;
 
     if (!str.match(/^\d\d/)) str = str
       .replace(/^(\d)/, "0$1");
 
-    str = str.replace(/[a-zA-Z]+/i, '');
+    str = str.replace(/\s?[a-zA-Z]+/i, '');
     let [hours, mins] = str.split(':');
     
-    if (isAM && hours === '12') hours = '00';
+    if (isAM && ['12', '00'].includes(hours)) hours = '00', mins = '00';
     if (isPM && hours !== '12') hours = +hours + 12;
     
     let date = dayjs()
@@ -73,7 +74,8 @@ export const transformBody = body => {
       .set('minute', +mins)
       .set('second', 0)
       .set('millisecond', 0)
-    
+      .add(1, isAM && hours === '00' ? 'day' : null)
+      
     return date.toJSON();
   }
 
@@ -196,6 +198,7 @@ export const transformBody = body => {
 // exports / testing
 
 // hide/unhide me for testing scraping
+
 // (async () => {
 //   const matches = await fetch(URL, {mode: Cors({methods: 'GET'})}).then(res => res.text()).then(body => {    
 //     const matches = transformBody(body);

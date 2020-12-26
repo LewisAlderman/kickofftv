@@ -15,3 +15,13 @@ body {
 	border: none;
 	@apply bg-teal-300;
 }
+
+.scrollToTopBtn {
+	opacity: @apply opacity-50;
+	animation: fadeIn 200ms ease-out;
+
+	@keyframes fadeIn {
+		from {opacity: 0; transform: translateX(100px)}
+		to {opacity: @apply opacity-50; transform: translateX(0)}
+	}
+}

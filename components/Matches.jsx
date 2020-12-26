@@ -41,7 +41,7 @@ export default function Matches ({items, setLatestMatchRef}) {
 				
 				const prevDiffTime = i === 0 || items[i-1].time !== time;
 				const nextSameTime = items[i+1]?.time === time;
-				const isPast = now > dayjs(time).add(90, 'minute');
+				const isPast = now > dayjs(time).add(105, 'minute');
 				
 				return (
 					<div key={id}>

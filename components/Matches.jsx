@@ -1,9 +1,9 @@
-import { useFiltersContext } from 'contexts';
 import useWindowResize from 'hooks/useWindowResize';
 import debounce from 'lodash.debounce';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs'
 import { DEV } from '../constants.ts';
+import useWindow from 'hooks/useWindow';
 
 /**
  * @param {Object} props 
@@ -12,11 +12,8 @@ import { DEV } from '../constants.ts';
  
 export default function Matches ({items, setLatestMatchRef}) {		
 	const [now] = useState(new Date());
-	const ref = useRef(null);
 	
-	if (DEV() && typeof window !== 'undefined') {
-		window.dayjs = dayjs
-	}
+	useWindow(() => (window.dayjs = dayjs))
 	
 	useEffect(() => {
 		console.log('items.length changed', items);
@@ -53,7 +50,7 @@ export default function Matches ({items, setLatestMatchRef}) {
 								<div className="relative w-full h-full">
 									{/* text */}
 									{Boolean(i === 0 || prevDiffTime) && (
-										<p className={`relative z-10 text-xs leading-10 uppercase sm:text-sm ${isPast ? 'text-blueGray-300' : ' text-blueGray-500'}`}>
+										<p className={`relative z-10 text-xs leading-10 uppercase sm:text-sm bg-blueGray-50 ${isPast ? 'text-blueGray-300' : ' text-blueGray-500'}`}>
 											{dayjs(time).format('h:mmA')}
 										</p>
 									)}

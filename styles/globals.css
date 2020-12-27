@@ -1,6 +1,6 @@
 /* globals */
 
-* {background: inherit; scroll-behavior: smooth}
+* {scroll-behavior: smooth}
 
 body {
 	overscroll-behavior-y: contain;
@@ -14,15 +14,15 @@ body {
 
 ::selection {
 	border: none;
-	@apply bg-teal-300;
+	background: rgba(94, 234, 212);
 }
 
 .scrollToTopBtn {
-	opacity: @apply opacity-50;
+	opacity: 0.5;
 	animation: fadeIn 200ms ease-out;
 
 	@keyframes fadeIn {
 		from {opacity: 0; transform: translateX(100px)}
-		to {opacity: @apply opacity-50; transform: translateX(0)}
+		to {opacity: 0.5; transform: translateX(0)}
 	}
 }

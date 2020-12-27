@@ -15,6 +15,8 @@ import Filters from '@components/Filters';
 import { FiltersContextProvider, INITIAL_FILTERS, MatchesContextProvider } from 'contexts';
 import debounce from 'lodash.debounce';
 
+/** @type {HTMLAttributes<HTMLDivElement>.className} */
+export const bg = "bg"
 
 // Functionality
 // ======
@@ -71,7 +73,7 @@ function Homepage(props) {
 
         {/* SCROLL UP BTN */}
         {isScrollToTopVisible && (
-          <button className='fixed z-10 w-12 h-12 px-2 py-1 text-center rounded-full opacity-50 bg-blueGray-200 text-blueGray-500 right-3 bottom-3 hover:opacity-100 lg:w-20 lg:h-20 scrollToTopBtn'
+          <button className='fixed z-10 w-12 h-12 px-2 py-1 text-center rounded-full opacity-50 bg-emerald-200 text-emerald-500 right-3 bottom-3 hover:opacity-100 lg:w-20 lg:h-20 scrollToTopBtn'
           onClick={() => typeof document !== 'undefined' && (document.documentElement.scrollTop ? document.documentElement.scrollTop = 0 : document.body.scrollTop = 0)}>
             <svg className="w-8 h-8 mx-auto fill-current lg:w-12 lg:h-12" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4H18V6H6zM11 14L11 20 13 20 13 14 18 14 12 8 6 14z"></path></svg>
           </button>
@@ -90,11 +92,11 @@ function Homepage(props) {
           {latestMatchRef && (
             <button
             style={{flex: 1, flexBasis: 300}}
-            className="flex items-center px-12 py-3 mb-3 font-mono text-teal-900 bg-teal-400 rounded w-96 whitespace-nowrap hover:bg-teal-300"
+            className="flex items-center px-12 py-3 mb-3 font-mono rounded text-emerald-900 bg-emerald-300 w-96 whitespace-nowrap hover:bg-emerald-200"
             onClick={() => latestMatchRef?.scrollIntoView({behavior: 'smooth'})}>
               <span className="relative mx-auto">
                 View Latest Game{' '}
-                <svg className="absolute top-1 -right-9 bg-none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path className="text-teal-100 fill-current" d="M18 12L13 12 13 6 11 6 11 12 6 12 12 19z"></path></svg>
+                <svg className="absolute top-1 -right-9 bg-none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path className="fill-current text-emerald-100" d="M18 12L13 12 13 6 11 6 11 12 6 12 12 19z"></path></svg>
               </span>
             </button>
           )}

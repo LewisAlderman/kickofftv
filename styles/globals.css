@@ -20,14 +20,14 @@ body {
 .logo {
 	position: relative;
 	&::after {
-		font-weight: bold;
+		font-weight: bolder;
 		content: 'TV';
 		position: absolute;
 		font-size: xx-small;
-		color: #a7f3d0;
-    background: #249476;
+		color: #34d399;
+    background: #25996f;
 		width: 2.15ch;
-		height: 2.15ch;
+		height: 2.05ch;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;

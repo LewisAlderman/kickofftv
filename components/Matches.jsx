@@ -31,7 +31,7 @@ export default function Matches ({items, setLatestMatchRef}) {
 	
 	return (
 		<>
-		<div className="mt-12 mb-40 space-y-8 sm:space-y-10 md:space-y-12">
+		<div className="space-y-8 sm:space-y-10 md:space-y-12">
 			{items
 				.map(({id, teams, channels, competition, time, event, women, postponed}, i) => {
 				const [homeTeam, awayTeam] = teams;

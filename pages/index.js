@@ -39,6 +39,7 @@ import ScrollUpButton from '@components/ScrollUpButton';
  
 function Homepage(props) {    
   const [filters, setFilters] = useState(() => INITIAL_FILTERS);
+  const [isFiltersVisible, setFiltersVisible] = useState(false);
   const [groups] = useState(() => groupByFilters(props.data))
   const [isScrollToTopVisible, setScrollToTopVisible] = useState(false);
 
@@ -65,12 +66,14 @@ function Homepage(props) {
         
       <div className="flex flex-col min-h-screen ios-safari-full-height bg-blueGray-50 debug-screens">
         
-      <Navigation />
+      <Navigation onFilterToggleClick={() => setFiltersVisible(x => !x)} />
+
+      {isFiltersVisible && (
+          <Filters onFilterChange={toggleFilter} reset={reset} groups={groups} />
+        )}
       
       <Main>
         <ScrollUpButton visible={isScrollToTopVisible} />
-        
-        <Filters onFilterChange={toggleFilter} reset={reset} groups={groups} />
 
         <div className="flex flex-wrap items-center justify-between">
           <div className="mb-3 mr-4" style={{flex: 9999, flexBasis: 250}}>
@@ -92,6 +95,9 @@ function Homepage(props) {
             </button>
           )}
         </div>
+
+        <br/>
+        <br/>
 
         <Matches items={matches} setLatestMatchRef={setLatestMatchRef} />
 

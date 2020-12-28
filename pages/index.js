@@ -50,8 +50,7 @@ function Homepage(props) {
   return (
     <>
       <Head>
-        <title>WhensTheMatch</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Kickoff | UK TV</title>
       </Head>
         
       <div className="flex flex-col min-h-screen ios-safari-full-height bg-blueGray-50 debug-screens">

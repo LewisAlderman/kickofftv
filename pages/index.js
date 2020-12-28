@@ -15,9 +15,6 @@ import Filters from '@components/Filters';
 import { FiltersContextProvider, INITIAL_FILTERS, MatchesContextProvider } from 'contexts';
 import debounce from 'lodash.debounce';
 
-/** @type {HTMLAttributes<HTMLDivElement>.className} */
-export const bg = "bg"
-
 // Functionality
 // ======
 // @TODO display total fixture count

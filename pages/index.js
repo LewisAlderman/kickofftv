@@ -128,7 +128,7 @@ function groupByFilters (matches) {
   }, {gender: {male: [], female: [], both: []}, youth: {true: [], false: []}, televised: {true: [], false: [], both: []}})
 }
 
-export async function getServerSideProps() {  
+export async function getStaticProps() {  
   const matches = await fetch(URL, {mode: Cors({methods: 'GET'})}).then(res => res.text()).then(body => {    
     const matches = transformBody(body);
     return matches;
@@ -138,6 +138,7 @@ export async function getServerSideProps() {
     props: {
       data: matches, 
     },
+    revalidate: 60
   }
 }
 

@@ -76,11 +76,11 @@ function Homepage(props) {
           {latestMatchRef && (
             <button
             style={{flex: 1, flexBasis: 300}}
-            className="flex items-center px-12 py-3 mb-3 font-mono rounded text-emerald-900 bg-emerald-300 w-96 whitespace-nowrap hover:bg-emerald-200"
+            className="flex items-center px-12 py-3 mb-3 font-mono rounded text-emerald-900 bg-emerald-400 w-96 whitespace-nowrap hover:bg-emerald-300"
             onClick={() => latestMatchRef?.scrollIntoView({behavior: 'smooth'})}>
               <span className="relative mx-auto">
                 View Latest Game{' '}
-                <svg className="absolute top-1 -right-9 bg-none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path className="fill-current text-emerald-100" d="M18 12L13 12 13 6 11 6 11 12 6 12 12 19z"></path></svg>
+                <svg className="absolute top-1 -right-9 bg-none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path className="text-white fill-current" d="M18 12L13 12 13 6 11 6 11 12 6 12 12 19z"></path></svg>
               </span>
             </button>
           )}

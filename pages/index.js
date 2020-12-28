@@ -18,19 +18,9 @@ import ScrollUpButton from '@components/ScrollUpButton';
 
 // Functionality
 // ======
-// @TODO display total fixture count
 // @TODO nav component
 // @TODO footer component
-// @TODO scroll-to-top
-// @TODO filter checkboxes: mens | women | under Xs 
-// @TODO search filter (team|competition|channel) (? could cmd+F)
-// @TODO auto-scroll to nearest time (? perhaps annoying)
-//
-// Styling
-// ======
-// @TODO do something with dates formatting
-// @TODO past/started match style
-// @TODO auto-scroll to nearest time (? perhaps annoying)
+
 
 /**
  * @param {Object} props 
@@ -96,7 +86,6 @@ function Homepage(props) {
           )}
         </div>
 
-        <br/>
         <br/>
 
         <Matches items={matches} setLatestMatchRef={setLatestMatchRef} />

@@ -5,7 +5,13 @@ module.exports = {
     extend: {
       colors: {
         ...require('tailwindcss/colors')
-      }
+      },
+      spacing: {
+        "safe-top": "calc(env(safe-area-inset-top) + 1rem)",
+        "safe-bottom": "calc(env(safe-area-inset-bottom) + 1rem)",
+        "safe-left": "calc(env(safe-area-inset-left) + 1rem)",
+        "safe-right": "calc(env(safe-area-inset-right) + 1rem)",
+      },
     },
   },
   variants: {

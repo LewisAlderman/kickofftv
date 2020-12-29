@@ -1,19 +1,17 @@
 import Head from 'next/head';
 import Cors from 'cors';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
+import debounce from 'lodash.debounce';
 
 import { transformBody, URL } from '@data/index';
-import { DEV } from '../constants.ts';
-
 import usePageScroll from '../hooks/usePageScroll'
+import { INITIAL_FILTERS } from 'contexts';
 
 import Navigation from '@components/Navigation';
 import Footer from '@components/Footer';
 import Main from '@components/Main';
 import Matches from '@components/Matches';
 import Filters from '@components/Filters';
-import { FiltersContextProvider, INITIAL_FILTERS, MatchesContextProvider } from 'contexts';
-import debounce from 'lodash.debounce';
 import ScrollUpButton from '@components/ScrollUpButton';
 
 // Functionality
@@ -30,14 +28,14 @@ import ScrollUpButton from '@components/ScrollUpButton';
 function Homepage(props) {    
   const [filters, setFilters] = useState(() => INITIAL_FILTERS);
   const [isFiltersVisible, setFiltersVisible] = useState(false);
+  const reset = () => setFilters(INITIAL_FILTERS)
+
   const [groups] = useState(() => groupByFilters(props.data))
   const [isScrollToTopVisible, setScrollToTopVisible] = useState(false);
 
   usePageScroll(debounce(({target: {documentElement, body}}) => {
     setScrollToTopVisible((documentElement.scrollTop || body.scrollTop) > documentElement.clientHeight * 0.5)
   }, 250, {maxWait: 500}))
-
-  const reset = () => setFilters(INITIAL_FILTERS)
 
   const toggleFilter = ({target: {id, value}}) => {
     setFilters(() => ({...filters, [id]: value}));

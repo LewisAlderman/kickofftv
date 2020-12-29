@@ -3,7 +3,7 @@ import PageWrapper from './PageWrapper';
 
 export default function Navigation({onFilterToggleClick}) {
 	return (
-		<nav className="flex flex-col h-16 bg-emerald-400 text-emerald-900">
+		<nav className="sticky top-0 z-20 flex flex-col py-4 lg:relative bg-emerald-400 text-emerald-900 pt-safe-top">
 			<PageWrapper className="flex-1 w-full h-full px-0">
 				<div className="flex items-center justify-center flex-1 w-full h-full lg:justify-between">
 				

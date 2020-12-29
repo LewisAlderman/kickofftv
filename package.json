@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "dev-build": "yarn run build && yarn run start"
   },
   "dependencies": {
     "autoprefixer": "^10.1.0",

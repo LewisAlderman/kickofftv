@@ -2,19 +2,37 @@
 
 * {scroll-behavior: smooth}
 
-body {
-	overscroll-behavior-y: contain;
+html, body {
+	height: 100%;
+	min-height: 100vh;
+	overscroll-behavior: none;
 	-webkit-overflow-scrolling: touch;
+}
+
+body {
+	-webkit-tap-highlight-color: transparent;
 	scroll-behavior: smooth !important;
-	
-	@supports (-webkit-overflow-scrolling: touch) {
-		-webkit-overflow-scrolling: touch;
+
+	@media screen and (display-mode: standalone) {
+		user-select: none;
+		::selection {
+			background: transparent;
+		}
 	}
 }
 
 ::selection {
 	border: none;
 	background: rgba(94, 234, 212);
+}
+
+nav, footer {
+	min-height: 4rem;
+}
+
+footer {
+	position: relative;
+	bottom: 0;
 }
 
 .logo {

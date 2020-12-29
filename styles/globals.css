@@ -37,21 +37,29 @@ footer {
 
 .logo {
 	position: relative;
-	&::after {
-		font-weight: bolder;
-		content: 'TV';
-		position: absolute;
-		font-size: xx-small;
-		color: #34d399;
-    background: #25996f;
-		width: 2.15ch;
-		height: 2.05ch;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 50%;
-		top: .66ch;
-		transform: translateX(10%);
+
+	.icon {
+		display: inline-grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+		align-content: center;
+		
+		svg {
+			grid-column: 1/1;
+			grid-row: 1/1;
+			width: 0.75em;
+			height: 0.75em;
+		}
+		span {
+			grid-column: 1/1;
+			grid-row: 1/1;
+			position: relative;
+			top: 1px;
+			font-size: xx-small;
+		}
 	}
 }
 

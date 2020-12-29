@@ -7,10 +7,10 @@ module.exports = {
         ...require('tailwindcss/colors')
       },
       spacing: {
-        "safe-top": "calc(env(safe-area-inset-top) + 1rem)",
-        "safe-bottom": "calc(env(safe-area-inset-bottom) + 1rem)",
-        "safe-left": "calc(env(safe-area-inset-left) + 1rem)",
-        "safe-right": "calc(env(safe-area-inset-right) + 1rem)",
+        "safe-top": "calc(env(safe-area-inset-top) + 0.5rem)",
+        "safe-bottom": "calc(env(safe-area-inset-bottom) + 0.5rem)",
+        "safe-left": "calc(env(safe-area-inset-left) + 0.5rem)",
+        "safe-right": "calc(env(safe-area-inset-right) + 0.5rem)",
       },
     },
   },

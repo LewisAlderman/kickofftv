@@ -5,6 +5,12 @@ export default function Navigation({onFilterToggleClick}) {
 	/** @type {import('react').MutableRefObject<HTMLDivElement>} */
 	const ref = useRef(null);
 	
+	useEffect(() => {
+		if (ref) {
+			ref.current.style.boxShadow = ``
+		}
+	}, [ref])
+	
 	return (
 		<nav ref={ref} className="sticky top-0 z-20 flex flex-col py-2 lg:relative bg-emerald-400 text-emerald-900 pt-safe-top">
 			<PageWrapper className="flex items-center flex-1 w-full h-full px-0">

@@ -70,7 +70,7 @@ function Homepage(props) {
           <div className="flex mb-4 space-x-3" style={{flex: 9999, flexBasis: 250}}>
             <div className="flex justify-between flex-grow space-x-3">
               <div className="items-baseline flex-grow w-full">
-                <p className="flex flex-wrap items-baseline text-xs text-gray-300 font-extralight">
+                <p className="flex flex-wrap items-baseline text-xs font-normal text-gray-300 md:font-extralight">
                   <span className="text-sm text-gray-400 whitespace-nowrap">
                   {dayjs().format('ddd D MMMM')}
                   &nbsp;

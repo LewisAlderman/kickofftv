@@ -16,9 +16,6 @@ module.exports = {
         'standalone': {
            'display-mode': 'standalone'
         },
-        'only-screen': {
-           'raw': 'only screen'
-        },
       }
     },
   },

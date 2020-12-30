@@ -100,8 +100,8 @@ export default function Matches ({items, setLatestMatchRef}) {
 											</span>
 											)}
 											{!!postponed && (
-												<span className="rounded-full inline-block px-3 py-0.5 text-rose-700 bg-rose-400 uppercase font-semibold tracking-normal">
-													<small>
+												<span>
+													<small className="inline-block px-2 font-semibold tracking-normal uppercase rounded-full text-rose-500 bg-rose-100">
 													Postponed
 													</small>
 												</span>
@@ -125,6 +125,11 @@ export default function Matches ({items, setLatestMatchRef}) {
 													</div>
 												)
 											})}
+											{!!postponed && (
+												<div className="flex justify-center text-center sm:w-24 text-rose-500">
+													<svg xmlns="http://www.w3.org/2000/svg" className="w-6 sm:w-8 xl:w-10" fill="currentColor" viewBox="0 0 24 24"><path d="M4 19h10.879L2.145 6.265C2.054 6.493 2 6.74 2 7v10C2 18.103 2.897 19 4 19zM18 7c0-1.103-.897-2-2-2H6.414L3.707 2.293 2.293 3.707l18 18 1.414-1.414L18 16.586v-2.919L22 17V7l-4 3.333V7z"></path></svg>
+												</div>
+											)}
 										</div>
 								</div>
 							</div>

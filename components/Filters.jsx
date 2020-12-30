@@ -4,7 +4,11 @@ import PageWrapper from './PageWrapper';
 
 const Filters = ({onFilterChange, reset, groups}) => {	
 	return (
-		<div className="border-t border-emerald-300 bg-emerald-200">
+		<div className="sticky z-20 border-t border-emerald-300 bg-emerald-200" ref={(ref) => {
+			if (ref) {
+				ref.style.top = `${ref.parentElement.querySelector('nav').clientHeight}px`
+			}
+		}}>
 		<PageWrapper>
 			<div className="flex flex-col flex-wrap px-6 py-5 md:flex-row justify-evenly">
 				{Object.entries(fields).map(([id, {renderLabel, options}]) => {

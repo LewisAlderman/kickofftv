@@ -13,8 +13,12 @@ module.exports = {
         "safe-right": "calc(env(safe-area-inset-right) + 0.5rem)",
       },
       screens: {
-        'standalone': {/** 'raw': 'standalone' */},
-        'only-screen': {/** 'raw': 'only screen' */},
+        'standalone': {
+           'display-mode': 'standalone'
+        },
+        'only-screen': {
+           'raw': 'only screen'
+        },
       }
     },
   },

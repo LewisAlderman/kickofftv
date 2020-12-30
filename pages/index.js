@@ -63,6 +63,10 @@ function Homepage(props) {
           <Filters onFilterChange={toggleFilter} reset={reset} groups={groups} />
         )}
       
+
+      <h1 className="only-screen:text-green-600" >ONLY SCREEN</h1>
+      <h1 className="standalone:text-green-600" >STANDALONE</h1>
+      
       <Main>
         <ScrollUpButton visible={isScrollToTopVisible} />
 

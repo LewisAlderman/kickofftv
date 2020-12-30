@@ -12,6 +12,10 @@ module.exports = {
         "safe-left": "calc(env(safe-area-inset-left) + 0.5rem)",
         "safe-right": "calc(env(safe-area-inset-right) + 0.5rem)",
       },
+      screens: {
+        'standalone': {/** 'raw': 'standalone' */},
+        'only-screen': {/** 'raw': 'only screen' */},
+      }
     },
   },
   variants: {

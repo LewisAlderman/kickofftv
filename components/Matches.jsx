@@ -50,7 +50,7 @@ export default function Matches ({items, setLatestMatchRef}) {
 								<div className="relative w-full h-full">
 									{/* text */}
 									{Boolean(i === 0 || prevDiffTime) && (
-										<p className={`relative z-10 text-xs leading-10 uppercase sm:text-sm bg-blueGray-50 ${isPast ? 'text-blueGray-300' : ' text-blueGray-500'}`}>
+										<p className={`relative z-10 text-xs leading-10 uppercase sm:text-sm bg-blueGray-50 ${isPast ? 'text-blueGray-400 md:text-blueGray-300' : 'text-blueGray-600 md:text-blueGray-500'}`}>
 											{dayjs(time).format('h:mmA')}
 										</p>
 									)}

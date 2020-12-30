@@ -4,8 +4,8 @@ import PageWrapper from './PageWrapper';
 
 const Filters = ({onFilterChange, reset, groups}) => {	
 	return (
-		<div className="sticky z-20 border-t border-emerald-300 bg-emerald-200" ref={(ref) => {
-			if (ref) {
+		<div className="sticky z-20 lg:static bg-emerald-200" ref={(ref) => {
+			if (ref && ref.classList.contains('sticky')) {
 				ref.style.top = `${ref.parentElement.querySelector('nav').clientHeight}px`
 			}
 		}}>

@@ -73,3 +73,16 @@ nav, footer {
 		to {opacity: 0.5; transform: translateX(0)}
 	}
 }
+
+.animate-1 {
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in-out;
+}
+.animate-3 {
+	animation-iteration-count: 3;
+	animation-timing-function: ease-in-out;
+}
+.animate-infinite {
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in;
+}

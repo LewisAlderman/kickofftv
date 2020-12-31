@@ -16,6 +16,9 @@ module.exports = {
         'standalone': {
            'display-mode': 'standalone'
         },
+      },
+      animation: {
+        'spin': 'spin 1s linear infinite reverse'
       }
     },
   },

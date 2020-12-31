@@ -11,7 +11,7 @@ export default function Navigation({isFiltersVisible, onFilterToggleClick}) {
 				<div className="flex items-center justify-center flex-1 w-full h-full lg:justify-between">
 				
 					{/* LOGO */}
-					<span className="text-2xl font-extrabold transform -skew-x-12 -skew-y-3 md:text-xl lg:text-lg logo">
+					<span className="text-2xl font-extrabold transform -skew-x-12 -skew-y-3 md:text-xl logo">
 						KICK
 						<span className="text-white">OFF</span>
 

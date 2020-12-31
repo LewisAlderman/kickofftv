@@ -14,6 +14,7 @@ import Main from '@components/Main';
 import Matches from '@components/Matches';
 import Filters from '@components/Filters';
 import ScrollUpButton from '@components/ScrollUpButton';
+import { DEV } from '../constants.ts';
 
 /**
  * @param {Object} props 
@@ -74,6 +75,14 @@ function Homepage({
                   <span className="">
                   Last Updated: {dayjs(lastUpdated).format('HH:mm:ss')}
                   </span>
+                  {DEV() && (
+                    <>
+                    &nbsp;|&nbsp;
+                    <span className="">
+                    Last Ran: {dayjs(new Date()).format('HH:mm:ss')}
+                    </span>
+                    </>
+                  )}
                 </p>
               </div>
               

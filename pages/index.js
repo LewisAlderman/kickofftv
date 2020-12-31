@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import { transformBody, URL } from '@data/index';
 import usePageScroll from '../hooks/usePageScroll'
 import { INITIAL_FILTERS } from 'contexts';
+import { DEV } from '../constants.ts';
 
 import Navigation from '@components/Navigation';
 import Footer from '@components/Footer';
@@ -14,7 +15,9 @@ import Main from '@components/Main';
 import Matches from '@components/Matches';
 import Filters from '@components/Filters';
 import ScrollUpButton from '@components/ScrollUpButton';
-import { DEV } from '../constants.ts';
+import ScrollDownButton from '@components/ScrollDownButton';
+import useDocument from 'hooks/useDocument';
+import useWindow from 'hooks/useWindow';
 
 /**
  * @param {Object} props 
@@ -25,6 +28,9 @@ import { DEV } from '../constants.ts';
 function Homepage({
   data, lastUpdated
 }) {    
+  const document = useDocument();
+  const window = useWindow();
+  
   const [filters, setFilters] = useState(() => INITIAL_FILTERS);
   const [isFiltersVisible, setFiltersVisible] = useState(false);
   const reset = () => setFilters(INITIAL_FILTERS)
@@ -106,19 +112,9 @@ function Homepage({
           </div>
 
           {/* SCROLL DOWN */}
-          {latestMatchRef && (
-            <div className="flex-1 px-0 my-4 md:px-12 md:my-8">
-              <button
-                style={{flexBasis: 300}}
-                className="flex items-center flex-1 w-full px-12 py-3 mx-auto font-mono rounded bg-emerald-400 text-emerald-900 w-96 whitespace-nowrap hover:bg-emerald-300 md:border-2 md:border-emerald-300 md:bg-transparent"
-                onClick={() => latestMatchRef?.scrollIntoView({behavior: 'smooth'})}>
-                  <span className="relative mx-auto">
-                    Scroll To Latest{' '}
-                    <svg className="absolute top-1 -right-9 bg-none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path className="text-white fill-current md:text-emerald-400" d="M18 12L13 12 13 6 11 6 11 12 6 12 12 19z"></path></svg>
-                  </span>
-                </button>
-            </div>
-          )}
+          <div className="flex-1 px-0 my-4 md:px-12 md:my-8">
+            <ScrollDownButton visible={!!(window && document) && document.body.scrollHeight > window.innerHeight*1.66 && latestMatchRef} />
+          </div>
         </div>
 
         <br/>

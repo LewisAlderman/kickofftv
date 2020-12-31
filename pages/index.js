@@ -73,16 +73,18 @@ function Homepage({
                   &nbsp;
                   </span>
                   <span className="">
-                  Last Updated: {dayjs(lastUpdated).format('HH:mm:ss')}
-                  </span>
-                  {DEV() && (
-                    <>
-                    &nbsp;|&nbsp;
                     <span className="">
-                    Last Ran: {dayjs(new Date()).format('HH:mm:ss')}
+                    Last Updated: {dayjs(lastUpdated).format('HH:mm:ss')}
                     </span>
-                    </>
-                  )}
+                    {DEV() && (
+                      <>
+                      <br/>
+                      <span className="whitespace-nowrap">
+                      Last Ran: {dayjs(new Date()).format('HH:mm:ss')}
+                      </span>
+                      </>
+                    )}
+                  </span>
                 </p>
               </div>
               

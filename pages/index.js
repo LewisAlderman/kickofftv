@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Cors from 'cors';
 import React, { useState } from 'react'
 import debounce from 'lodash.debounce';
+import dayjs from 'dayjs';
 
 import { transformBody, URL } from '@data/index';
 import usePageScroll from '../hooks/usePageScroll'
@@ -13,13 +14,6 @@ import Main from '@components/Main';
 import Matches from '@components/Matches';
 import Filters from '@components/Filters';
 import ScrollUpButton from '@components/ScrollUpButton';
-import dayjs from 'dayjs';
-
-// Functionality
-// ======
-// @TODO nav component
-// @TODO footer component
-
 
 /**
  * @param {Object} props 
@@ -27,12 +21,14 @@ import dayjs from 'dayjs';
  * @param {string} props.lastUpdated Date string
  */
  
-function Homepage(props) {    
+function Homepage({
+  data, lastUpdated
+}) {    
   const [filters, setFilters] = useState(() => INITIAL_FILTERS);
   const [isFiltersVisible, setFiltersVisible] = useState(false);
   const reset = () => setFilters(INITIAL_FILTERS)
 
-  const [groups] = useState(() => groupByFilters(props.data))
+  const [groups] = useState(() => groupByFilters(data))
   const [isScrollToTopVisible, setScrollToTopVisible] = useState(false);
 
   usePageScroll(debounce(({target: {documentElement, body}}) => {
@@ -47,7 +43,7 @@ function Homepage(props) {
   
   const matches = [].concat(groups.gender[filters.gender]).filter(cur => groups.youth[filters.youth].find(({id})=>id===cur.id) && groups.televised[filters.televised].find(({id}) => id===cur.id));
 
-  const postponedMatches = props.data.filter(({postponed}) => !!postponed);
+  const postponedMatches = data.filter(({postponed}) => !!postponed);
   
   return (
     <>
@@ -76,7 +72,7 @@ function Homepage(props) {
                   &nbsp;
                   </span>
                   <span className="">
-                  Last Updated: {dayjs(props.lastUpdated).format('HH:mm:ss')}
+                  Last Updated: {dayjs(lastUpdated).format('HH:mm:ss')}
                   </span>
                 </p>
               </div>
@@ -86,7 +82,7 @@ function Homepage(props) {
                 <span className="mr-1">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M14,12c-1.095,0-2-0.905-2-2c0-0.354,0.103-0.683,0.268-0.973C12.178,9.02,12.092,9,12,9c-1.642,0-3,1.359-3,3 c0,1.642,1.358,3,3,3c1.641,0,3-1.358,3-3c0-0.092-0.02-0.178-0.027-0.268C14.683,11.897,14.354,12,14,12z"></path><path d="M12,5c-7.633,0-9.927,6.617-9.948,6.684L1.946,12l0.105,0.316C2.073,12.383,4.367,19,12,19s9.927-6.617,9.948-6.684 L22.054,12l-0.105-0.316C21.927,11.617,19.633,5,12,5z M12,17c-5.351,0-7.424-3.846-7.926-5C4.578,10.842,6.652,7,12,7 c5.351,0,7.424,3.846,7.926,5C19.422,13.158,17.348,17,12,17z"></path></svg>
               </span>
-              {matches?.length ?? 0}/{props.data?.length ?? 0}
+              {matches?.length ?? 0}/{data?.length ?? 0}
               </small>
               <small className="flex items-center text-rose-400">
                 <span className="mr-1">

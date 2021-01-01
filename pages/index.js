@@ -159,7 +159,6 @@ export async function getStaticProps() {
       data: matches, 
       lastUpdated: new Date().toJSON()
     },
-    revalidate: 60*2
   }
 }
 

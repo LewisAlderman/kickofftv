@@ -1,4 +1,5 @@
 import React from 'react';
+import SVG from './SVG';
 
 const ScrollDownButton = ({visible}) => {
 	if (!visible) return null;
@@ -10,7 +11,10 @@ const ScrollDownButton = ({visible}) => {
 			onClick={() => visible?.scrollIntoView({behavior: 'smooth'})}>
 				<span className="relative mx-auto">
 					Scroll To Latest{' '}
-					<svg className="absolute top-1 -right-9 bg-none" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path className="text-white fill-current md:text-emerald-400" d="M18 12L13 12 13 6 11 6 11 12 6 12 12 19z"></path></svg>
+
+					<span className="text-white md:text-emerald-400">
+						<SVG.ArrowDown className="absolute fill-current top-1 -right-9 bg-none" width="1em" height="1em" />
+					</span>
 				</span>
 			</button>
 	)

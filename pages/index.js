@@ -82,7 +82,7 @@ function Homepage({
                     <span className="">
                     Last Updated: {dayjs(lastUpdated).format('HH:mm:ss')}
                     </span>
-                    {DEV() && (
+                    {true /** DEV() */ && (
                       <>
                       <br/>
                       <span className="whitespace-nowrap">

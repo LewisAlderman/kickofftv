@@ -1,13 +1,12 @@
 import Head from 'next/head';
 import Cors from 'cors';
 import React, { useState } from 'react'
-import debounce from 'lodash.debounce';
 import dayjs from 'dayjs';
 
 import { transformBody, URL } from '@data/index';
-import usePageScroll from '../hooks/usePageScroll'
 import { INITIAL_FILTERS } from 'contexts';
-import { DEV } from '../constants.ts';
+import useDocument from 'hooks/useDocument';
+import useWindow from 'hooks/useWindow';
 
 import Navigation from '@components/Navigation';
 import Footer from '@components/Footer';
@@ -16,8 +15,6 @@ import Matches from '@components/Matches';
 import Filters from '@components/Filters';
 import ScrollUpButton from '@components/ScrollUpButton';
 import ScrollDownButton from '@components/ScrollDownButton';
-import useDocument from 'hooks/useDocument';
-import useWindow from 'hooks/useWindow';
 
 /**
  * @param {Object} props 
@@ -37,10 +34,6 @@ function Homepage({
 
   const [groups] = useState(() => groupByFilters(data))
   const [isScrollToTopVisible, setScrollToTopVisible] = useState(false);
-
-  usePageScroll(debounce(({target: {documentElement, body}}) => {
-    setScrollToTopVisible((documentElement.scrollTop || body.scrollTop) > documentElement.clientHeight * 0.5)
-  }, 250, {maxWait: 500}))
 
   const toggleFilter = ({target: {id, value}}) => {
     setFilters(() => ({...filters, [id]: value}));
@@ -67,7 +60,7 @@ function Homepage({
         )}
       
       <Main>
-        <ScrollUpButton visible={isScrollToTopVisible} />
+        <ScrollUpButton visible={isScrollToTopVisible} setVisible={setScrollToTopVisible} />
 
         <div>
           <div className="flex mb-4 space-x-3" style={{flex: 9999, flexBasis: 250}}>

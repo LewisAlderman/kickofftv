@@ -11,13 +11,10 @@ import useWindow from 'hooks/useWindow';
  */
  
 export default function Matches ({items, setLatestMatchRef}) {		
-	const [now] = useState(new Date());
+	// const [now] = useState(new Date());
+	const now = new Date();
 	
 	useWindow(() => (window.dayjs = dayjs))
-	
-	useEffect(() => {
-		console.log('items.length changed', items);
-	}, [items.length])
 
 	const [imgSize, setImgSize] = useState('100px');
 	

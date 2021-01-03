@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React from 'react';
 
 const StatsBubble = ({ groups, postponedMatchCount }) => {
@@ -35,6 +36,22 @@ const StatsBubble = ({ groups, postponedMatchCount }) => {
                 {postponedMatchCount}
               </span>
               <span>game(s) postponed</span>
+              {/* postponed details */}
+              {groups?.televised?.false?.find(({ postponed }) => postponed) && (
+                <ul className="mt-3">
+                  {(groups?.televised?.false ?? [])
+                    .filter(({ postponed }) => postponed)
+                    .map((game) => (
+                      <li
+                        className="text-xs opacity-75 mb-0.5 ml-8 mt-1"
+                        style={{ listStyleType: 'initial' }}
+                        key={game.id}>
+                        [{dayjs(game.time).format('h:mmA')}]{' '}
+                        {game.teams.join(' v ')}
+                      </li>
+                    ))}
+                </ul>
+              )}
             </li>
           )}
         </ul>

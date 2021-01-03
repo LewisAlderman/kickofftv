@@ -96,3 +96,41 @@ footer {
   animation-iteration-count: infinite;
   animation-timing-function: ease-in;
 }
+
+.stats-bubble {
+  transform-origin: 90% -10%;
+  animation: fade 200ms ease-out both, bounce 200ms ease-out 100ms both;
+
+  &::after {
+    --size: 1rem;
+    position: absolute;
+    content: '';
+    right: 1.5rem;
+    top: calc(var(--size) * -1);
+    width: 0;
+    height: 0;
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-bottom: var(--size) solid currentColor;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes bounce {
+    0% {
+      transform: scale(0.66) translateY(0px);
+    }
+    66% {
+      transform: scale(1.1) translateY(4px);
+    }
+    100% {
+      transform: scale(1) translateY(4px);
+    }
+  }
+}

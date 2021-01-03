@@ -43,10 +43,10 @@ const StatsBubble = ({ groups, postponedMatchCount }) => {
                     .filter(({ postponed }) => postponed)
                     .map((game) => (
                       <li
-                        className="text-xs opacity-75 mb-0.5 ml-8 mt-1"
-                        style={{ listStyleType: 'initial' }}
+                        className="text-xs opacity-75 mb-0.5 ml-4 mt-1"
+                        // style={{ listStyleType: 'initial' }}
                         key={game.id}>
-                        [{dayjs(game.time).format('h:mmA')}]{' '}
+                        ↳ {dayjs(game.time).format('h:mmA')}:{' '}
                         {game.teams.join(' v ')}
                       </li>
                     ))}

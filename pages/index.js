@@ -90,52 +90,41 @@ function Homepage({ data, lastUpdated, postponedMatchCount }) {
           {/* Date stuff */}
           <div>
             <div
-              className="flex mb-4 space-x-3"
+              className="flex space-x-3"
               style={{ flex: 9999, flexBasis: 250 }}>
-              <div className="flex justify-between flex-grow space-x-3">
-                <div className="items-baseline flex-grow w-full">
-                  <p className="flex flex-wrap items-baseline text-xs font-normal text-gray-300 md:font-extralight">
-                    <span className="text-sm text-gray-400 whitespace-nowrap">
-                      {dayjs().format('ddd D MMMM')}
-                      &nbsp;
-                    </span>
-                    <span className="">
-                      <span className="">
-                        Last Updated: {dayjs(lastUpdated).format('HH:mm:ss')}
-                      </span>
-                      {true /** DEV() */ && (
-                        <>
-                          <br />
-                          <span className="whitespace-nowrap">
-                            Last Ran: {dayjs(new Date()).format('HH:mm:ss')}
-                          </span>
-                        </>
-                      )}
-                    </span>
-                  </p>
-                </div>
+              <div className="flex items-center justify-between flex-grow space-x-3">
+                <p className="flex items-end text-blueGray-400 whitespace-nowrap">
+                  <span className="mr-2">
+                    <SVG.Calendar className="inline-block" />
+                  </span>
+                  <span className="text-sm font-light lg:text-base">
+                    {dayjs().format('ddd D MMMM')}
+                  </span>
+                </p>
 
-                <div className="flex space-x-3">
-                  <small className="flex items-center text-teal-500">
+                <button className="relative flex items-end px-10 py-5 space-x-3 text-sm cursor-pointer -right-10">
+                  <span className="flex items-center text-teal-500">
                     <span className="mr-1">
                       <SVG.Eye />
                     </span>
-                    {matches?.length ?? 0}/{data?.length ?? 0}
-                  </small>
+                    <span>
+                      {matches?.length ?? 0}/{data?.length ?? 0}
+                    </span>
+                  </span>
                   {!!postponedMatchCount && (
-                    <small className="flex items-center text-rose-400">
+                    <span className="flex items-center text-rose-400">
                       <span className="mr-1">
                         <SVG.EyeOff />
                       </span>
-                      {postponedMatchCount || 0}
-                    </small>
+                      <span>{postponedMatchCount || 0}</span>
+                    </span>
                   )}
-                </div>
+                </button>
               </div>
             </div>
 
             {/* SCROLL DOWN */}
-            <div className="flex-1 px-0 my-4 md:px-12 md:my-8">
+            <div className="flex-1 px-0 mt-2 mb-4 md:px-12 md:mt-4 md:mb-8">
               <ScrollDownButton visible={showScrollDownBtn} />
             </div>
           </div>

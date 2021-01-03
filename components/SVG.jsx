@@ -137,18 +137,18 @@ SVG.ArrowToTop = (props) => (
 );
 SVG.ArrowToTop.displayName = 'SVG.ArrowToTop';
 
-SVG.CalendarCheck = (props) => (
+SVG.Calendar = (props) => (
   <SVG {...props}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24">
-      <path d="M19,4h-2V2h-2v2H9V2H7v2H5C3.897,4,3,4.897,3,6v2v12c0,1.103,0.897,2,2,2h14c1.103,0,2-0.897,2-2V8V6 C21,4.897,20.103,4,19,4z M19.002,20H5V8h14L19.002,20z"></path>
-      <path d="M11 17.414L16.707 11.707 15.293 10.293 11 14.586 8.707 12.293 7.293 13.707z"></path>
+      <path d="M7 11H9V13H7zM7 15H9V17H7zM11 11H13V13H11zM11 15H13V17H11zM15 11H17V13H15zM15 15H17V17H15z"></path>
+      <path d="M5,22h14c1.103,0,2-0.897,2-2V8V6c0-1.103-0.897-2-2-2h-2V2h-2v2H9V2H7v2H5C3.897,4,3,4.897,3,6v2v12 C3,21.103,3.897,22,5,22z M19,8l0.001,12H5V8H19z"></path>
     </svg>
   </SVG>
 );
-SVG.CalendarCheck.displayName = 'SVG.CalendarCheck';
+SVG.Calendar.displayName = 'SVG.Calendar';
 
 export default SVG;

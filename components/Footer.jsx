@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="flex items-center justify-center h-48 py-2 bg-emerald-400 text-emerald-800 pb-safe-bottom standalone:bg-transparent standalone:h-28">
       <PageWrapper className="flex flex-col items-center justify-center space-y-2">
-        <div className="mb-2 text-sm text-center text-emerald-600 standalone:text-gray-300">
+        <div className="mb-2 text-sm text-center text-emerald-600 standalone:text-blueGray-300">
           All data for this site is curated for education purposes only
         </div>
 

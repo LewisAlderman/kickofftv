@@ -27,3 +27,10 @@ export function groupByFilters(matches) {
 export function isWithinHourAndHalf(dateToCompare, currentDate = new Date()) {
   return currentDate > dayjs(dateToCompare).add(105, 'minute');
 }
+
+export function scrollToTop() {
+  if (typeof document !== 'undefined') {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+}

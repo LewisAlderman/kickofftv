@@ -48,17 +48,18 @@ export default function Matches({ items, setLatestMatchRef }) {
             const prevDiffTime = i === 0 || items[i - 1].time !== time;
             const nextSameTime = items[i + 1]?.time === time;
 
-            if (!isPast) alreadySetLatestMatchRef.current = true;
-
             return (
               <div key={id}>
                 <div
                   className="flex flex-row"
-                  ref={
-                    !isPast && !alreadySetLatestMatchRef.current
-                      ? setLatestMatchRef
-                      : null
-                  }>
+                  ref={(r) => {
+                    if (!isPast && !alreadySetLatestMatchRef.current) {
+                      console.log(r);
+                      alreadySetLatestMatchRef.current = true;
+                      return setLatestMatchRef(r);
+                    }
+                    return null;
+                  }}>
                   {/**
                    * Time
                    */}

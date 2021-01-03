@@ -1,88 +1,142 @@
 /* globals */
 
-* {scroll-behavior: smooth}
+* {
+  scroll-behavior: smooth;
+}
 
-html, body {
-	height: 100%;
-	min-height: 100vh;
-	overscroll-behavior: none;
-	-webkit-overflow-scrolling: touch;
+html,
+body {
+  height: 100%;
+  min-height: 100vh;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
-	-webkit-tap-highlight-color: transparent;
-	scroll-behavior: smooth !important;
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth !important;
 
-	@media screen and (display-mode: standalone) {
-		user-select: none;
-		::selection {
-			background: transparent;
-		}
-		nav {
-			padding-bottom: 1rem !important;
-		}
-		footer {
-			padding-top: 1rem !important;
-		}
-	}
+  @media screen and (display-mode: standalone) {
+    user-select: none;
+    ::selection {
+      background: transparent;
+    }
+    nav {
+      padding-bottom: 1rem !important;
+    }
+    footer {
+      padding-top: 1rem !important;
+    }
+  }
 }
 
 ::selection {
-	border: none;
-	background: rgba(94, 234, 212);
+  border: none;
+  background: rgba(94, 234, 212);
 }
 
-nav, footer {
-	min-height: 4rem;
+nav,
+footer {
+  min-height: 4rem;
 }
 
 .logo {
-	position: relative;
+  position: relative;
 
-	.icon {
-		display: inline-grid;
+  .icon {
+    display: inline-grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     justify-content: center;
     justify-items: center;
     align-items: center;
-		align-content: center;
-		
-		svg {
-			grid-column: 1/1;
-			grid-row: 1/1;
-			width: 0.75em;
-			height: 0.75em;
-		}
-		span {
-			grid-column: 1/1;
-			grid-row: 1/1;
-			position: relative;
-			top: 1px;
-			font-size: xx-small;
-		}
-	}
+    align-content: center;
+
+    svg {
+      grid-column: 1/1;
+      grid-row: 1/1;
+      width: 0.75em;
+      height: 0.75em;
+    }
+    span {
+      grid-column: 1/1;
+      grid-row: 1/1;
+      position: relative;
+      top: 1px;
+      font-size: xx-small;
+    }
+  }
 }
 
 .scrollToTopBtn {
-	opacity: 0.5;
-	animation: fadeIn 200ms ease-out;
+  opacity: 0.5;
+  animation: fadeIn 200ms ease-out;
 
-	@keyframes fadeIn {
-		from {opacity: 0; transform: translateX(100px)}
-		to {opacity: 0.5; transform: translateX(0)}
-	}
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    to {
+      opacity: 0.5;
+      transform: translateX(0);
+    }
+  }
 }
 
 .animate-1 {
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
 }
 .animate-3 {
-	animation-iteration-count: 3;
-	animation-timing-function: ease-in-out;
+  animation-iteration-count: 3;
+  animation-timing-function: ease-in-out;
 }
 .animate-infinite {
-	animation-iteration-count: infinite;
-	animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+}
+
+.isAllMatchesFinished {
+  user-select: none;
+  animation: fade 500ms ease-in-out 1s both, scale 400ms ease-in-out 1s both;
+
+  .icon {
+    animation: fade 500ms ease-in-out 1.5s both,
+      scale 400ms ease-in-out 1.5s both;
+  }
+  .text {
+    animation: fade 500ms ease-in-out 2s both, scale 400ms ease-in-out 2s both;
+  }
+
+  &::selection {
+    background: transparent;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes scale {
+    0% {
+      transform: scale(0.5);
+    }
+    20% {
+      transform: scale(1.1);
+    }
+    40% {
+      transform: scale(0.9);
+    }
+    70% {
+      transform: scale(1.033);
+    }
+    90%,
+    100% {
+      transform: scale(1);
+    }
+  }
 }

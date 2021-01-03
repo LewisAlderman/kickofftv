@@ -10,7 +10,7 @@ export default function Navigation({ isFiltersVisible, onFilterToggleClick }) {
   const window = useWindow();
 
   return (
-    <nav className="sticky top-0 z-20 flex flex-col py-2 lg:relative bg-emerald-400 text-emerald-900 pt-safe-top">
+    <nav className="sticky top-0 z-40 flex flex-col py-2 lg:relative bg-emerald-400 text-emerald-900 pt-safe-top">
       <PageWrapper className="flex items-center flex-1 w-full h-full px-0">
         <div className="flex items-center justify-center flex-1 w-full h-full lg:justify-between">
           {/* LOGO */}

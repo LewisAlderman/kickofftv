@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 import dayjs from 'dayjs';
 
-import useWindow from 'hooks/useWindow';
 import useWindowResize from 'hooks/useWindowResize';
 import SVG from './SVG';
 
@@ -12,10 +11,7 @@ import SVG from './SVG';
  */
 
 export default function Matches({ items, setLatestMatchRef }) {
-  // const [now] = useState(new Date());
-  const now = new Date();
-
-  useWindow(() => (window.dayjs = dayjs));
+  const alreadySetLatestMatchRef = useRef(false);
 
   const [imgSize, setImgSize] = useState('100px');
 
@@ -34,20 +30,35 @@ export default function Matches({ items, setLatestMatchRef }) {
       <div className="space-y-8 sm:space-y-10 md:space-y-12">
         {items.map(
           (
-            { id, teams, channels, competition, time, event, women, postponed },
+            {
+              id,
+              teams,
+              channels,
+              competition,
+              time,
+              event,
+              women,
+              postponed,
+              isPast,
+            },
             i,
           ) => {
             const [homeTeam, awayTeam] = teams;
 
             const prevDiffTime = i === 0 || items[i - 1].time !== time;
             const nextSameTime = items[i + 1]?.time === time;
-            const isPast = now > dayjs(time).add(105, 'minute');
+
+            if (!isPast) alreadySetLatestMatchRef.current = true;
 
             return (
               <div key={id}>
                 <div
                   className="flex flex-row"
-                  ref={isPast ? setLatestMatchRef : null}>
+                  ref={
+                    !isPast && !alreadySetLatestMatchRef.current
+                      ? setLatestMatchRef
+                      : null
+                  }>
                   {/**
                    * Time
                    */}

@@ -98,7 +98,7 @@ export default function Matches({ items, setLatestMatchRef, badges }) {
                     {/**
                      * Team names
                      */}
-                    <div className="flex-1 space-y-2">
+                    <div className="flex-1 space-y-2 md:space-y-3 lg:space-y-4">
                       {[homeTeam, awayTeam].map((team) => {
                         if (!team) return null;
                         const [teamName, ageGroup] = getTeamNameAndAgeGroup(
@@ -107,27 +107,29 @@ export default function Matches({ items, setLatestMatchRef, badges }) {
 
                         return (
                           <p
-                            className="relative text-xl font-bold tracking-wide uppercase 2xl:text-2xl md:text-2xl text-blueGray-900"
+                            className="relative flex items-start text-xl font-bold tracking-wide uppercase 2xl:text-2xl md:text-2xl text-blueGray-900"
                             key={team}>
                             <span className="inline-flex w-10 lg:w-14">
                               <Badge
-                                className="w-6 h-6 lg:w-8 lg:h-8 relative top-0.5 lg:top-1"
+                                className="relative w-6 h-6 lg:w-8 lg:h-8 lg:-top-0.5 md:top-0.5"
                                 teamName={teamName}
                                 badges={badges}
                               />
                             </span>
-                            <span className="mr-2">{teamName}</span>
-                            {women ? (
-                              <sup className="inline-block px-1 font-mono text-xs tracking-tight text-pink-400 bg-pink-100 rounded-full md:text-sm">
-                                <small>
-                                  {window.innerWidth > 600 ? 'LADIES' : 'L'}
-                                </small>
-                              </sup>
-                            ) : ageGroup ? (
-                              <sup className="inline-block px-1 font-mono text-xs text-teal-500 bg-teal-200 rounded-full md:text-sm">
-                                <small>{ageGroup}</small>
-                              </sup>
-                            ) : null}
+                            <span>
+                              <span className="mr-2">{teamName}</span>
+                              {women ? (
+                                <sup className="inline-block px-1 font-mono text-xs tracking-tight text-pink-400 bg-pink-100 rounded-full md:text-sm">
+                                  <small>
+                                    {window.innerWidth > 600 ? 'LADIES' : 'L'}
+                                  </small>
+                                </sup>
+                              ) : ageGroup ? (
+                                <sup className="inline-block px-1 font-mono text-xs text-teal-500 bg-teal-200 rounded-full md:text-sm">
+                                  <small>{ageGroup}</small>
+                                </sup>
+                              ) : null}
+                            </span>
                           </p>
                         );
                       })}
@@ -220,7 +222,12 @@ function Badge({ teamName, badges, className = '', ...restProps }) {
       className={`inline-flex items-center w-10 text-blueGray-400 ${className}`}
       {...restProps}>
       {match ? (
-        <img src={badges[match]} className="inline-block h-full" />
+        <img
+          src={badges[match]}
+          className="inline-block h-full"
+          alt={match}
+          title={teamName}
+        />
       ) : (
         <svg
           fill="currentColor"

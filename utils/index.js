@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { compareTwoStrings } from 'string-similarity';
 
 export function groupByFilters(matches) {
   return matches.reduce(
@@ -33,4 +34,40 @@ export function scrollToTop() {
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
   }
+}
+
+export function findClosestTeamName(input, badges) {
+  input = input.toLowerCase();
+  if (input in badges) return input;
+
+  if (input.replace(/^(\w\w)\s/, '') in badges) {
+    return input.replace(/^(\w\w)\s/, ''); // starts w/ 2 letters
+  }
+
+  if (input.replace(/\s(\w\w)$/, '') in badges) {
+    return input.replace(/\s(\w\w)$/, ''); // ends w/ 2 letters
+  }
+
+  if (input.replace(/^(\w\w\s)/, '') in badges) {
+    return input.replace(/^(\d+)\s/, ''); // starts w/ numbers
+  }
+
+  if (input.replace(/\s(\d+)$/, '') in badges) {
+    return input.replace(/\s(\d+)$/, ''); // ends w/ numbers
+  }
+
+  let bestStr = '';
+  let bestMatchPc = 0;
+
+  for (const key in badges) {
+    const pc = compareTwoStrings(input, key);
+    if (pc > 0.75) {
+      if (pc > bestMatchPc) {
+        bestStr = key;
+        bestMatchPc = pc;
+      }
+    }
+  }
+
+  return bestStr;
 }

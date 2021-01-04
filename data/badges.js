@@ -45,7 +45,7 @@ export const getBadgeMap = (body) => {
   imgs.each((i, el) => {
     // normalize accent letters to latin/english
     const node = $(el);
-    const team = removeAccents(node.attr('alt'));
+    const team = removeAccents(node.attr('alt')).toLowerCase();
     if (!teamMap.has(team)) {
       teamMap.set(team, node.attr('data-src'));
     }

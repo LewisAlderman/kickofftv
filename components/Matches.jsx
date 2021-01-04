@@ -4,31 +4,25 @@ import dayjs from 'dayjs';
 
 import useWindowResize from 'hooks/useWindowResize';
 import SVG from './SVG';
+import { findClosestTeamName } from 'utils';
 
-function getBadge(teamName, badges) {
-  const svg = (
-    <svg
-      fill="currentColor"
-      className="inline-block"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24">
-      <path d="M21.881,5.223c-0.015-0.378-0.421-0.603-0.747-0.412c-0.672,0.392-1.718,0.898-2.643,0.898 c-0.421,0-0.849-0.064-1.289-0.198c-0.265-0.08-0.532-0.178-0.808-0.309c-1.338-0.639-2.567-1.767-3.696-2.889 C12.506,2.122,12.253,2.027,12,2.023c-0.253,0.004-0.506,0.099-0.698,0.29c-1.129,1.122-2.358,2.25-3.696,2.889c0,0,0,0-0.001,0 C7.33,5.333,7.063,5.431,6.798,5.511c-0.44,0.134-0.869,0.198-1.289,0.198c-0.925,0-1.971-0.507-2.643-0.898 C2.54,4.62,2.134,4.845,2.119,5.223c-0.061,1.538-0.077,4.84,0.688,7.444c1.399,4.763,4.48,7.976,8.91,9.292L11.857,22l0.14-0.014 V22v-0.014H12L12.143,22l0.14-0.041c4.43-1.316,7.511-4.529,8.91-9.292C21.958,10.063,21.941,6.761,21.881,5.223z"></path>
-    </svg>
-  );
+function Badge({ teamName, badges, className = '', ...restProps }) {
+  const match = findClosestTeamName(teamName, badges);
 
   return (
-    <span className="relative inline-flex items-center w-10 text-blueGray-400 top-0.5">
-      {teamName in badges ? (
-        <img
-          src={badges[teamName]}
-          width="22px"
-          height="22px"
-          className="inline-block"
-        />
+    <span
+      className={`inline-flex items-center w-10 text-blueGray-400 ${className}`}
+      {...restProps}>
+      {match ? (
+        <img src={badges[match]} className="inline-block h-full" />
       ) : (
-        svg
+        <svg
+          fill="currentColor"
+          className="inline-block h-full"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24">
+          <path d="M21.881,5.223c-0.015-0.378-0.421-0.603-0.747-0.412c-0.672,0.392-1.718,0.898-2.643,0.898 c-0.421,0-0.849-0.064-1.289-0.198c-0.265-0.08-0.532-0.178-0.808-0.309c-1.338-0.639-2.567-1.767-3.696-2.889 C12.506,2.122,12.253,2.027,12,2.023c-0.253,0.004-0.506,0.099-0.698,0.29c-1.129,1.122-2.358,2.25-3.696,2.889c0,0,0,0-0.001,0 C7.33,5.333,7.063,5.431,6.798,5.511c-0.44,0.134-0.869,0.198-1.289,0.198c-0.925,0-1.971-0.507-2.643-0.898 C2.54,4.62,2.134,4.845,2.119,5.223c-0.061,1.538-0.077,4.84,0.688,7.444c1.399,4.763,4.48,7.976,8.91,9.292L11.857,22l0.14-0.014 V22v-0.014H12L12.143,22l0.14-0.041c4.43-1.316,7.511-4.529,8.91-9.292C21.958,10.063,21.941,6.761,21.881,5.223z"></path>
+        </svg>
       )}
     </span>
   );
@@ -137,7 +131,13 @@ export default function Matches({ items, setLatestMatchRef, badges }) {
                           <p
                             className="relative text-xl font-bold tracking-wide uppercase 2xl:text-2xl md:text-2xl text-blueGray-900"
                             key={team}>
-                            {getBadge(teamName, badges)}
+                            <span className="inline-flex w-10 lg:w-14">
+                              <Badge
+                                className="w-6 h-6 lg:w-8 lg:h-8 relative top-0.5 lg:top-1"
+                                teamName={teamName}
+                                badges={badges}
+                              />
+                            </span>
                             <span className="mr-2">{teamName}</span>
                             {women ? (
                               <sup className="inline-block px-1 font-mono text-xs tracking-tight text-pink-400 bg-pink-100 rounded-full md:text-sm">
@@ -155,7 +155,7 @@ export default function Matches({ items, setLatestMatchRef, badges }) {
                       })}
 
                       {!!(event || postponed) && (
-                        <p className="pl-10 text-xs font-medium tracking-wide strike sm:text-sm">
+                        <p className="pl-10 text-xs font-medium tracking-wide lg:pl-14 strike sm:text-sm">
                           {!!event && (
                             <span
                               className={`rounded-full inline-block mr-2 px-3 py-0.5 text-blueGray-700 bg-blueGray-400 ${
@@ -175,7 +175,7 @@ export default function Matches({ items, setLatestMatchRef, badges }) {
                       )}
 
                       {/* competition */}
-                      <p className="pl-10 text-sm font-normal md:text-base text-warmGray-500">
+                      <p className="pl-10 text-sm font-normal lg:pl-14 md:text-base text-warmGray-500">
                         {' '}
                         {competition}{' '}
                       </p>

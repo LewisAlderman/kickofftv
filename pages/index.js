@@ -149,13 +149,15 @@ function Homepage({ data, lastUpdated, postponedMatchCount }) {
 
           <Matches items={matches} setLatestMatchRef={setLatestMatchRef} />
 
-          <div className="hidden mt-20 lg:grid place-items-center">
-            <button
-              className="px-32 py-6 text-blueGray-300"
-              onClick={scrollToTop}>
-              Scroll Back To Top
-            </button>
-          </div>
+          {!!showScrollDownBtn && (
+            <div className="hidden mt-20 lg:grid place-items-center">
+              <button
+                className="px-32 py-6 text-blueGray-300"
+                onClick={scrollToTop}>
+                Scroll Back To Top
+              </button>
+            </div>
+          )}
         </Main>
 
         <Footer />

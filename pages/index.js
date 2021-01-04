@@ -4,6 +4,7 @@ import Cors from 'cors';
 import dayjs from 'dayjs';
 
 import { transformBody, URL } from '@data/index';
+import { getBadgeMap, BADGES_URL } from '@data/badges';
 import { groupByFilters, isWithinHourAndHalf, scrollToTop } from 'utils';
 import { INITIAL_FILTERS } from 'contexts';
 import useDocument from 'hooks/useDocument';
@@ -24,9 +25,10 @@ import StatsBubble from '@components/StatsBubble';
  * @param {import('@data/index').Match[]} props.data
  * @param {string} props.lastUpdated Date string
  * @param {number} props.postponedMatchCount
+ * @param {Object<string,string>} props.badges {teamName: url}
  */
 
-function Homepage({ data, lastUpdated, postponedMatchCount }) {
+function Homepage({ data, lastUpdated, postponedMatchCount, badges }) {
   const document = useDocument();
   const window = useWindow();
   const [now] = useState(new Date());
@@ -147,7 +149,11 @@ function Homepage({ data, lastUpdated, postponedMatchCount }) {
 
           <br />
 
-          <Matches items={matches} setLatestMatchRef={setLatestMatchRef} />
+          <Matches
+            items={matches}
+            setLatestMatchRef={setLatestMatchRef}
+            badges={badges}
+          />
 
           {!!showScrollDownBtn && (
             <div className="hidden mt-20 lg:grid place-items-center">
@@ -177,11 +183,19 @@ export async function getServerSideProps() {
   const postponedMatchCount =
     matches.filter(({ postponed }) => !!postponed)?.length ?? 0;
 
+  const badges = await fetch(BADGES_URL, { mode: Cors({ methods: 'GET' }) })
+    .then((res) => res.text())
+    .then((body) => {
+      const matches = getBadgeMap(body);
+      return matches;
+    });
+
   return {
     props: {
       data: matches,
       lastUpdated: new Date().toJSON(),
       postponedMatchCount,
+      badges,
     },
   };
 }

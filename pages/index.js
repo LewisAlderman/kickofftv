@@ -70,7 +70,7 @@ function Homepage({ data, lastUpdated, postponedMatchCount, badges }) {
       </Head>
 
       <div
-        className="flex flex-col min-h-screen ios-safari-full-height bg-blueGray-50 debug-screens"
+        className="flex flex-col min-h-screen overflow-x-hidden ios-safari-full-height bg-blueGray-50 debug-screens"
         onPointerDown={({ target }) =>
           isBubbleVisible &&
           !document?.querySelector('.stats-bubble')?.contains(target)

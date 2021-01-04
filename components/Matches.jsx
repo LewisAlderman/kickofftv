@@ -98,7 +98,7 @@ export default function Matches({ items, setLatestMatchRef, badges }) {
                     {/**
                      * Team names
                      */}
-                    <div className="flex-1 space-y-2 md:space-y-3 lg:space-y-4">
+                    <div className="flex-1 space-y-3 lg:space-y-4">
                       {[homeTeam, awayTeam].map((team) => {
                         if (!team) return null;
                         const [teamName, ageGroup] = getTeamNameAndAgeGroup(

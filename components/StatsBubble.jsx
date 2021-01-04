@@ -11,7 +11,7 @@ const StatsBubble = ({ groups, postponedMatchCount }) => {
               <span className="inline-flex items-center justify-center w-12 py-0.5 mr-2 font-medium font-mono text-sm rounded-full text-blueGray-200 bg-blueGray-600">
                 {groups.gender.male.length}
               </span>
-              <span>game(s) mens</span>
+              <span>mens</span>
             </li>
           )}
           {!!groups?.gender?.female?.length && (
@@ -19,7 +19,7 @@ const StatsBubble = ({ groups, postponedMatchCount }) => {
               <span className="inline-flex items-center justify-center w-12 py-0.5 mr-2 font-medium font-mono text-sm rounded-full text-blueGray-200 bg-blueGray-600">
                 {groups.gender.female.length}
               </span>
-              <span>game(s) womens</span>
+              <span>womens</span>
             </li>
           )}
           {!!groups?.youth?.true?.length && (
@@ -27,7 +27,7 @@ const StatsBubble = ({ groups, postponedMatchCount }) => {
               <span className="inline-flex items-center justify-center w-12 py-0.5 mr-2 font-medium font-mono text-sm rounded-full text-blueGray-200 bg-blueGray-600">
                 {groups.youth.true.length}
               </span>
-              <span>game(s) youth players</span>
+              <span>youth players</span>
             </li>
           )}
           {!!postponedMatchCount && (
@@ -35,7 +35,7 @@ const StatsBubble = ({ groups, postponedMatchCount }) => {
               <span className="inline-flex items-center justify-center w-12 py-0.5 mr-2 font-medium font-mono text-sm rounded-full text-blueGray-200 bg-blueGray-600">
                 {postponedMatchCount}
               </span>
-              <span>game(s) postponed</span>
+              <span>postponed</span>
               {/* postponed details */}
               {groups?.televised?.false?.find(({ postponed }) => postponed) && (
                 <ul className="mt-3">

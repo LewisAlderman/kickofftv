@@ -98,14 +98,14 @@ footer {
 }
 
 .stats-bubble {
-  transform-origin: 90% -10%;
+  transform-origin: 80% -2rem;
   animation: fade 200ms ease-out both, bounce 200ms ease-out 100ms both;
 
   &::after {
     --size: 1rem;
     position: absolute;
     content: '';
-    right: 1.5rem;
+    right: 1rem;
     top: calc(var(--size) * -1);
     width: 0;
     height: 0;

@@ -174,7 +174,7 @@ function Homepage({ data, postponedMatchCount, badges }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const matches = await fetch(URL, { mode: Cors({ methods: 'GET' }) })
     .then((res) => res.text())
     .then((body) => {
@@ -197,8 +197,9 @@ export async function getServerSideProps() {
       data: matches,
       postponedMatchCount,
       badges,
-      // lastUpdated: new Date().toJSON(),
+      lastUpdated: new Date().toJSON(),
     },
+    revalidate: 60 * 15,
   };
 }
 

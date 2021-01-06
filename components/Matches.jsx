@@ -55,7 +55,6 @@ export default function Matches({ items, setLatestMatchRef, badges }) {
                   className="flex flex-row"
                   ref={(r) => {
                     if (!isPast && !alreadySetLatestMatchRef.current) {
-                      console.log(r);
                       alreadySetLatestMatchRef.current = true;
                       return setLatestMatchRef(r);
                     }

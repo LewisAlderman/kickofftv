@@ -45,10 +45,13 @@ function Homepage({ data, postponedMatchCount, badges }) {
     setFilters(() => ({ ...filters, [id]: value }));
   };
 
-  const showScrollDownBtn =
+  const isPageScrollDownable =
     !!(window && document) &&
-    document.body.scrollHeight > window.innerHeight * 1.66 &&
-    latestMatchRef;
+    document.body.scrollHeight > window.innerHeight * 1.66;
+  const showScrollDownBtn =
+    isPageScrollDownable &&
+    latestMatchRef &&
+    latestMatchRef.offsetTop > window.innerHeight;
 
   const matches = []
     .concat(groups.gender[filters.gender])
@@ -142,7 +145,7 @@ function Homepage({ data, postponedMatchCount, badges }) {
 
             {/* SCROLL DOWN */}
             <div className="flex-1 px-0 mt-2 mb-4 md:px-12 md:mt-4 md:mb-8">
-              <ScrollDownButton visible={showScrollDownBtn} />
+              <ScrollDownButton visible={showScrollDownBtn && latestMatchRef} />
             </div>
           </div>
 
@@ -154,7 +157,7 @@ function Homepage({ data, postponedMatchCount, badges }) {
             badges={badges}
           />
 
-          {!!showScrollDownBtn && (
+          {!!isPageScrollDownable && (
             <div className="hidden mt-20 lg:grid place-items-center">
               <button
                 className="px-32 py-6 text-blueGray-300"

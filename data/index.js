@@ -9,6 +9,7 @@ const day = String(today.getUTCDate()).padStart(2, 0);
 
 const dateStr = year + month + day;
 
+// const Cors = require('cors');
 // export me after testing
 export const URL = `https://www.wheresthematch.com/live-football-on-tv/?showdatestart=${dateStr}`;
 
@@ -61,13 +62,13 @@ export const transformBody = (body) => {
     return eventStr || null;
   };
 
-  /** @type {function(cheerio.Cheerio): Time} */
-  const getTimeForRow = (row) => {
+  /** @type {function(cheerio.Cheerio, number, cheerio.Cheerio): Time} */
+  const getTimeForRow = (row, idx, rowNodes) => {
     const el = $(row.find('.time'));
     let str = el.text().trim();
 
     const isAM = !!str.match(/am/i);
-      const isPM = !isAM;
+    const isPM = !isAM;
 
     if (!str.match(/^\d\d/)) str = str.replace(/^(\d)/, '0$1');
 
@@ -85,7 +86,15 @@ export const transformBody = (body) => {
       .set('minute', +mins)
       .set('second', 0)
       .set('millisecond', 0)
-      .add(1, isAM && hours === '00' ? 'day' : null);
+      .add(
+        1,
+        isAM &&
+          hours === '00' &&
+          mins === '00' &&
+          idx > Math.floor(rowNodes / 2)
+          ? 'day'
+          : null,
+      );
 
     return date.toJSON();
   };
@@ -121,16 +130,16 @@ export const transformBody = (body) => {
     return Boolean(postponed);
   };
 
-  /** @type {function(cheerio.Cheerio): Match} */
-  const formatMatchFromRow = (row) => {
+  /** @type {function(cheerio.Cheerio, number): Match} */
+  const formatMatchFromRow = (...args) => {
     return {
-      teams: getTeamsForRow(row),
-      event: getEventForRow(row),
-      time: getTimeForRow(row),
-      competition: getCompetitionForRow(row),
-      channels: getChannelsForRow(row),
-      televised: getTelevisedForRow(row),
-      postponed: getPostponedForRow(row),
+      teams: getTeamsForRow(...args),
+      event: getEventForRow(...args),
+      time: getTimeForRow(...args),
+      competition: getCompetitionForRow(...args),
+      channels: getChannelsForRow(...args),
+      televised: getTelevisedForRow(...args),
+      postponed: getPostponedForRow(...args),
     };
   };
 
@@ -139,7 +148,7 @@ export const transformBody = (body) => {
 
   /** @type {Match[]} */
   const unfilteredMatches = $(rows)
-    .map((_, e) => formatMatchFromRow($(e)))
+    .map((i, e) => formatMatchFromRow($(e), i, rows))
     .toArray();
 
   const channelsToHide = [
@@ -226,13 +235,15 @@ export const transformBody = (body) => {
 // hide/unhide me for testing scraping
 
 // (async () => {
-//   const matches = await fetch(URL, {mode: Cors({methods: 'GET'})}).then(res => res.text()).then(body => {
-//     const matches = transformBody(body);
-//     return matches;
-//   });
+//   const matches = await fetch(URL, { mode: Cors({ methods: 'GET' }) })
+//     .then((res) => res.text())
+//     .then((body) => {
+//       const matches = transformBody(body);
+//       return matches;
+//     });
 
 //   // console.log(matches)
-// })()
+// })();
 
 /**
  * @typedef Teams @type {string[]}

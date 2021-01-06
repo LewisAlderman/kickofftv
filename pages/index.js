@@ -23,12 +23,11 @@ import StatsBubble from '@components/StatsBubble';
 /**
  * @param {Object} props
  * @param {import('@data/index').Match[]} props.data
- * @param {string} props.lastUpdated Date string
  * @param {number} props.postponedMatchCount
  * @param {Object<string,string>} props.badges {teamName: url}
  */
 
-function Homepage({ data, lastUpdated, postponedMatchCount, badges }) {
+function Homepage({ data, postponedMatchCount, badges }) {
   const document = useDocument();
   const window = useWindow();
   const [now] = useState(new Date());
@@ -193,9 +192,9 @@ export async function getServerSideProps() {
   return {
     props: {
       data: matches,
-      lastUpdated: new Date().toJSON(),
       postponedMatchCount,
       badges,
+      // lastUpdated: new Date().toJSON(),
     },
   };
 }

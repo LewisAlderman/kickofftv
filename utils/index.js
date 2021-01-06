@@ -61,7 +61,7 @@ export function findClosestTeamName(input, badges) {
 
   for (const key in badges) {
     const pc = compareTwoStrings(input, key);
-    if (pc > 0.75) {
+    if (pc > 0.66) {
       if (pc > bestMatchPc) {
         bestStr = key;
         bestMatchPc = pc;

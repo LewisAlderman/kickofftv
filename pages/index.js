@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Cors from 'cors';
 import dayjs from 'dayjs';
 
-import { transformBody, URL } from '@data/index';
+import { transformBody, URL, fixturesDate } from '@data/index';
 import { getBadgeMap, BADGES_URL } from '@data/badges';
 import { groupByFilters, isWithinHourAndHalf, scrollToTop } from 'utils';
 import { INITIAL_FILTERS } from 'contexts';
@@ -27,7 +27,7 @@ import StatsBubble from '@components/StatsBubble';
  * @param {Object<string,string>} props.badges {teamName: url}
  */
 
-function Homepage({ data, postponedMatchCount, badges }) {
+function Homepage({ data, postponedMatchCount, badges, fixturesDate }) {
   const document = useDocument();
   const window = useWindow();
   const [now] = useState(new Date());
@@ -109,7 +109,7 @@ function Homepage({ data, postponedMatchCount, badges }) {
                     <SVG.Calendar className="inline-block" />
                   </span>
                   <span className="text-sm font-light lg:text-base">
-                    {dayjs().format('ddd D MMMM')}
+                    {dayjs(fixturesDate).format('ddd D MMMM')}
                   </span>
                 </p>
 
@@ -195,6 +195,7 @@ export async function getStaticProps() {
   return {
     props: {
       data: matches,
+      fixturesDate: fixturesDate.toJSON(),
       postponedMatchCount,
       badges,
       lastUpdated: new Date().toJSON(),

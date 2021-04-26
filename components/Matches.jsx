@@ -106,7 +106,7 @@ export default function Matches({ items, setLatestMatchRef, badges }) {
 
                         return (
                           <p
-                            className="relative flex items-start text-xl font-bold tracking-wide uppercase 2xl:text-2xl md:text-2xl text-blueGray-900"
+                            className="relative flex items-start text-lg font-bold tracking-wide uppercase 2xl:text-2xl md:text-xl text-blueGray-900"
                             key={team}>
                             <span className="inline-flex w-10 lg:w-14">
                               <Badge

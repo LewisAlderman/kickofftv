@@ -12,7 +12,7 @@ const ScrollDownButton = ({ visible }) => {
         visible?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }>
       <span className="relative mx-auto">
-        Scroll To Latest{' '}
+        <span className="text-sm lg:text-base">Scroll To Latest </span>
         <span className="text-white md:text-emerald-400">
           <SVG.ArrowDown
             className="absolute fill-current top-1 -right-9 bg-none"

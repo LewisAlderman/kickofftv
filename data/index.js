@@ -2,18 +2,26 @@ require('isomorphic-fetch');
 const cheerio = require('cheerio');
 const dayjs = require('dayjs');
 
-const today = new Date();
-const year = String(today.getUTCFullYear());
-const month = String(today.getUTCMonth() + 1).padStart(2, 0);
-const day = String(today.getUTCDate()).padStart(2, 0);
+// ****************************************/
+// [!TEST] = unhide when testing scraping
+// ****************************************/
 
-const dateStr = year + month + day;
+// [!TEST] 'export'
+export const fixturesDate = new Date();
 
+const year = String(fixturesDate.getUTCFullYear());
+const month = String(fixturesDate.getUTCMonth() + 1).padStart(2, 0);
+const day = String(fixturesDate.getUTCDate()).padStart(2, 0);
+
+const urlDateStr = year + month + day;
+
+// [!TEST]
 // const Cors = require('cors');
-// export me after testing
-export const URL = `https://www.wheresthematch.com/live-football-on-tv/?showdatestart=${dateStr}`;
 
-// export me after testing
+// [!TEST] 'export'
+export const URL = `https://www.wheresthematch.com/live-football-on-tv/?showdatestart=${urlDateStr}`;
+
+// [!TEST] 'export'
 export const transformBody = (body) => {
   console.log('--------------[FETCHING]--------------\n', `${URL}\n`);
 
@@ -232,8 +240,7 @@ export const transformBody = (body) => {
 /// ////////////////////////////////////////////////////
 // exports / testing
 
-// hide/unhide me for testing scraping
-
+// [!TEST]
 // (async () => {
 //   const matches = await fetch(URL, { mode: Cors({ methods: 'GET' }) })
 //     .then((res) => res.text())
@@ -242,7 +249,7 @@ export const transformBody = (body) => {
 //       return matches;
 //     });
 
-//   // console.log(matches)
+//   console.log(matches);
 // })();
 
 /**

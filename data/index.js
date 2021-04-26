@@ -90,7 +90,7 @@ export const transformBody = (body) => {
     if (isPM && hours !== '12') hours = +hours + 12;
 
     const date = dayjs()
-      .set('hour', +hours + 60 / fixturesDate.getTimezoneOffset())
+      .set('hour', +hours)
       .set('minute', +mins)
       .set('second', 0)
       .set('millisecond', 0)

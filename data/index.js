@@ -94,6 +94,7 @@ export const transformBody = (body) => {
       .set('minute', +mins)
       .set('second', 0)
       .set('millisecond', 0)
+      .add('hour', fixturesDate / 60)
       .add(
         1,
         isAM &&

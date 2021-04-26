@@ -200,7 +200,8 @@ export async function getStaticProps() {
       badges,
       lastUpdated: new Date().toJSON(),
     },
-    revalidate: 60 * 15,
+    // revalidate: 60 * 15,
+    revalidate: Math.abs(dayjs().diff(dayjs().add(1, 'day').startOf('day'))),
   };
 }
 

@@ -27,10 +27,22 @@ import StatsBubble from '@components/StatsBubble';
  * @param {Object<string,string>} props.badges {teamName: url}
  */
 
-function Homepage({ data, postponedMatchCount, badges, fixturesDate }) {
+function Homepage({
+  data,
+  postponedMatchCount,
+  badges,
+  fixturesDate,
+  lastUpdated,
+}) {
   const document = useDocument();
   const window = useWindow();
   const [now] = useState(new Date());
+  const [fixturesDateStr] = useState(() =>
+    new Date(fixturesDate).toLocaleString(),
+  );
+  const [lastUpdatedStr] = useState(() =>
+    new Date(lastUpdated).toLocaleString(),
+  );
   const [latestMatchRef, setLatestMatchRef] = useState(null);
   const [isBubbleVisible, setBubbleVisible] = useState(false);
 
@@ -168,7 +180,12 @@ function Homepage({ data, postponedMatchCount, badges, fixturesDate }) {
           )}
         </Main>
 
-        <Footer />
+        <Footer>
+          <div>
+            <div>Fixtures for: {fixturesDateStr}</div>
+            <div>Last updated: {lastUpdatedStr}</div>
+          </div>
+        </Footer>
       </div>
     </>
   );

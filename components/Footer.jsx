@@ -1,10 +1,16 @@
 import React from 'react';
 import PageWrapper from './PageWrapper';
 
-export default function Footer() {
+export default function Footer({ children = null }) {
   return (
     <footer className="flex items-center justify-center h-48 py-2 bg-emerald-400 text-emerald-800 pb-safe-bottom standalone:bg-transparent standalone:h-28">
       <PageWrapper className="flex flex-col items-center justify-center space-y-2">
+        {!!children && (
+          <div className="mb-1 font-mono text-xs text-center text-emerald-600 standalone:text-blueGray-300">
+            {children}
+          </div>
+        )}
+
         <div className="mb-2 text-sm text-center text-emerald-600 standalone:text-blueGray-300">
           All data for this site is curated for education purposes only
         </div>

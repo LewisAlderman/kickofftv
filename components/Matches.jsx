@@ -6,6 +6,9 @@ import useWindowResize from 'hooks/useWindowResize';
 import SVG from './SVG';
 import { findClosestTeamName } from 'utils';
 
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
+
 /**
  * @param {Object} props
  * @param {import('@data/index').Match[]} props.items
@@ -73,7 +76,7 @@ export default function Matches({ items, setLatestMatchRef, badges }) {
                               ? 'text-blueGray-400 md:text-blueGray-300'
                               : 'text-blueGray-600 md:text-blueGray-500'
                           }`}>
-                          {dayjs(time).format('h:mmA')}
+                          {dayjs(time).local().format('h:mmA')}
                         </p>
                       )}
                       {/* vertical bar */}

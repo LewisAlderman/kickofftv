@@ -1,6 +1,8 @@
 require('isomorphic-fetch');
 const cheerio = require('cheerio');
 const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
 
 // ****************************************/
 // [!TEST] = unhide when testing scraping
@@ -90,7 +92,7 @@ export const transformBody = (body) => {
     if (isPM && hours !== '12') hours = +hours + 12;
 
     const date = dayjs()
-      .set('hour', +hours)
+      .set('hour', +hours - fixturesDate.getTimezoneOffset() / 60)
       .set('minute', +mins)
       .set('second', 0)
       .set('millisecond', 0)
